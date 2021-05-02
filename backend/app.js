@@ -22,6 +22,7 @@ app.listen(port, () => {
 //   password: "",
 //   database: "covid vaccination",
 // });
+
 const pool = mysql.createPool({
   connectionLimit: 10,
   host: "sql6.freemysqlhosting.net",
