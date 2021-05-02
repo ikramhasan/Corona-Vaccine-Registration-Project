@@ -9,29 +9,29 @@ User userFromJson(String str) => User.fromJson(json.decode(str));
 String userToJson(User data) => json.encode(data.toJson());
 
 class User {
-    User({
-        this.userId,
-        this.name,
-        this.email,
-        this.password,
-        this.phoneNo,
-        this.nid,
-        this.age,
-        this.location,
-        this.occupation,
-    });
+  User({
+    this.userId,
+    this.name,
+    this.email,
+    this.password,
+    this.phoneNo,
+    this.nid,
+    this.age,
+    this.location,
+    this.occupation,
+  });
 
-    int userId;
-    String name;
-    String email;
-    String password;
-    int phoneNo;
-    String nid;
-    int age;
-    String location;
-    String occupation;
+  int userId;
+  String name;
+  String email;
+  String password;
+  int phoneNo;
+  String nid;
+  int age;
+  String location;
+  String occupation;
 
-    factory User.fromJson(Map<String, dynamic> json) => User(
+  factory User.fromJson(Map<String, dynamic> json) => User(
         userId: json["user_id"],
         name: json["name"],
         email: json["email"],
@@ -41,9 +41,9 @@ class User {
         age: json["age"],
         location: json["location"],
         occupation: json["occupation"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "user_id": userId,
         "name": name,
         "email": email,
@@ -53,5 +53,9 @@ class User {
         "age": age,
         "location": location,
         "occupation": occupation,
-    };
+      };
+
+  @override
+  String toString() =>
+      'User(name: $name, email: $email, password: $password, age: $age, phone: $phoneNo, location: $location, occupation: $occupation, nid: $nid)';
 }

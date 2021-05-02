@@ -1,9 +1,12 @@
+import 'package:covid_vaccination/app/presentation/home_page.dart';
+import 'package:covid_vaccination/authentication/data/cubit/user_auth_cubit.dart';
 import 'package:covid_vaccination/authentication/data/models/user.dart';
 import 'package:covid_vaccination/authentication/data/repository/auth_repository.dart';
 import 'package:covid_vaccination/authentication/presentation/components/authentication_button.dart';
 import 'package:covid_vaccination/authentication/presentation/components/header.dart';
 import 'package:covid_vaccination/authentication/presentation/components/hover_text_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
 class UserLoginPage extends StatefulWidget {
@@ -23,7 +26,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
 
   AuthRepository _authRepository = AuthRepository();
 
-  int state = 0;
+  int index = 0;
 
   getWidget(int state) {
     switch (state) {
@@ -68,7 +71,39 @@ class _UserLoginPageState extends State<UserLoginPage> {
                     borderRadius: BorderRadius.circular(6),
                   ),
                   padding: EdgeInsets.all(16),
-                  child: getWidget(state),
+                  child: BlocConsumer<UserAuthCubit, UserAuthState>(
+                    listener: (context, state) {
+                      if (state is UserAuthError) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(state.message),
+                          ),
+                        );
+                      }
+
+                      if (state is UserAuthLoaded) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => HomePage(),
+                          ),
+                        );
+                      }
+                    },
+                    builder: (context, state) {
+                      if (state is UserAuthInitial) {
+                        return getWidget(index);
+                      }
+
+                      if (state is UserAuthLoading) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+
+                      return getWidget(index);
+                    },
+                  ),
                 ),
               ],
             ),
@@ -207,7 +242,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
             text: 'Already have an account? Login!',
             onTap: () {
               setState(() {
-                state = 0;
+                index = 0;
               });
             },
             fontSize: 16,
@@ -282,7 +317,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
           text: 'NEXT',
           onTap: () {
             setState(() {
-              state = 2;
+              index = 2;
             });
           },
         ),
@@ -293,7 +328,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
             text: 'Already have an account? Login!',
             onTap: () {
               setState(() {
-                state = 0;
+                index = 0;
               });
             },
             fontSize: 16,
@@ -352,10 +387,10 @@ class _UserLoginPageState extends State<UserLoginPage> {
         AuthenticationButton(
           text: 'LOGIN',
           onTap: () {
-            _authRepository.loginUser(
-              _emailController.text,
-              _passwordController.text,
-            );
+            context.read<UserAuthCubit>().loginUser(
+                  _emailController.text,
+                  _passwordController.text,
+                );
           },
         ),
         const Spacer(),
@@ -365,7 +400,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
             text: 'Don\'t have an account? Signup!',
             onTap: () {
               setState(() {
-                state = 1;
+                index = 1;
               });
             },
             fontSize: 16,

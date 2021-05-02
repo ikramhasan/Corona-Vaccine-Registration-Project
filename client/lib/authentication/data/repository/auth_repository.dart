@@ -16,7 +16,7 @@ class AuthRepository {
     }
   }
 
-  Future<void> loginUser(String email, String password) async {
+  Future<User> loginUser(String email, String password) async {
     Uri uri = Uri.parse('$BASE_URL/user?email=$email&password=$password');
 
     var response = await http.get(uri);
@@ -25,7 +25,7 @@ class AuthRepository {
       var data = jsonDecode(response.body);
       if (data.isNotEmpty) {
         User user = User.fromJson(data[0]);
-        print(user.name);
+        return user;
       } else {
         throw CustomException('No user found. Double check your spelling!');
       }
