@@ -1,3 +1,5 @@
+import 'package:covid_vaccination/authentication/data/models/user.dart';
+import 'package:covid_vaccination/authentication/data/repository/auth_repository.dart';
 import 'package:covid_vaccination/authentication/presentation/components/authentication_button.dart';
 import 'package:covid_vaccination/authentication/presentation/components/header.dart';
 import 'package:covid_vaccination/authentication/presentation/components/hover_text_button.dart';
@@ -10,6 +12,17 @@ class UserLoginPage extends StatefulWidget {
 }
 
 class _UserLoginPageState extends State<UserLoginPage> {
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  TextEditingController _ageController = TextEditingController();
+  TextEditingController _occupationController = TextEditingController();
+  TextEditingController _nidController = TextEditingController();
+  TextEditingController _locationController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
+
+  AuthRepository _authRepository = AuthRepository();
+
   int state = 0;
 
   getWidget(int state) {
@@ -82,6 +95,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
         ),
         const Spacer(),
         TextFormField(
+          controller: _nidController,
           decoration: InputDecoration(
             labelText: 'NID',
             labelStyle: TextStyle(fontSize: 22),
@@ -99,6 +113,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
           children: [
             Expanded(
               child: TextFormField(
+                controller: _occupationController,
                 decoration: InputDecoration(
                   labelText: 'Occupation',
                   labelStyle: TextStyle(fontSize: 22),
@@ -116,6 +131,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
             Container(
               width: 128,
               child: TextFormField(
+                controller: _ageController,
                 decoration: InputDecoration(
                   labelText: 'Age',
                   labelStyle: TextStyle(fontSize: 22),
@@ -132,6 +148,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
             const SizedBox(width: 32),
             Expanded(
               child: TextFormField(
+                controller: _locationController,
                 decoration: InputDecoration(
                   labelText: 'Location',
                   labelStyle: TextStyle(fontSize: 22),
@@ -149,6 +166,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
         ),
         const SizedBox(height: 32),
         TextFormField(
+          controller: _phoneController,
           decoration: InputDecoration(
             labelText: 'Phone no',
             labelStyle: TextStyle(fontSize: 22),
@@ -165,9 +183,21 @@ class _UserLoginPageState extends State<UserLoginPage> {
         AuthenticationButton(
           text: 'SIGNUP',
           onTap: () {
-            setState(() {
-              state = 2;
-            });
+            User user = User(
+              name: _nameController.text,
+              email: _emailController.text,
+              password: _passwordController.text,
+              nid: _nidController.text,
+              phoneNo: int.parse(_phoneController.text),
+              location: _locationController.text,
+              occupation: _occupationController.text,
+              age: int.parse(_ageController.text),
+            );
+
+            print(
+                '${user.name}, ${user.email}, ${user.password}, ${user.phoneNo.toString()}, ${user.location}, ${user.occupation}, ${user.nid}, ${user.age.toString()}, ');
+
+            _authRepository.registerUser(user);
           },
         ),
         const Spacer(),
@@ -204,6 +234,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
         ),
         const Spacer(),
         TextFormField(
+          controller: _nameController,
           decoration: InputDecoration(
             labelText: 'Name',
             labelStyle: TextStyle(fontSize: 22),
@@ -218,6 +249,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
         ),
         const SizedBox(height: 32),
         TextFormField(
+          controller: _emailController,
           decoration: InputDecoration(
             labelText: 'Email',
             labelStyle: TextStyle(fontSize: 22),
@@ -232,6 +264,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
         ),
         const SizedBox(height: 32),
         TextFormField(
+          controller: _passwordController,
           decoration: InputDecoration(
             labelText: 'Password',
             labelStyle: TextStyle(fontSize: 22),
@@ -287,6 +320,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
         ),
         const Spacer(),
         TextFormField(
+          controller: _emailController,
           decoration: InputDecoration(
             labelText: 'Email',
             labelStyle: TextStyle(fontSize: 22),
@@ -301,6 +335,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
         ),
         const SizedBox(height: 32),
         TextFormField(
+          controller: _passwordController,
           decoration: InputDecoration(
             labelText: 'Password',
             labelStyle: TextStyle(fontSize: 22),
@@ -316,7 +351,12 @@ class _UserLoginPageState extends State<UserLoginPage> {
         const SizedBox(height: 32),
         AuthenticationButton(
           text: 'LOGIN',
-          onTap: () {},
+          onTap: () {
+            _authRepository.loginUser(
+              _emailController.text,
+              _passwordController.text,
+            );
+          },
         ),
         const Spacer(),
         Align(
