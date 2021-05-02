@@ -15,12 +15,19 @@ app.listen(port, () => {
 });
 
 // Connect to Database
+// const pool = mysql.createPool({
+//   connectionLimit: 10,
+//   host: "localhost",
+//   user: "root",
+//   password: "",
+//   database: "covid vaccination",
+// });
 const pool = mysql.createPool({
   connectionLimit: 10,
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "covid vaccination",
+  host: "sql6.freemysqlhosting.net",
+  user: "sql6409757",
+  password: "3eVEN6Axak",
+  database: "sql6409757",
 });
 
 // Connect to server
