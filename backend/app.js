@@ -23,6 +23,11 @@ const pool = mysql.createPool({
   database: "covid vaccination",
 });
 
+// Connect to server
+app.get("/", (req, res) => {
+    res.send('Server running...');
+});
+
 // Get all users
 app.get("/users", (req, res) => {
   pool.getConnection((error, connection) => {
