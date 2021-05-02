@@ -1,7 +1,6 @@
 import 'package:covid_vaccination/app/presentation/home_page.dart';
 import 'package:covid_vaccination/authentication/data/cubit/user_auth_cubit.dart';
 import 'package:covid_vaccination/authentication/data/models/user.dart';
-import 'package:covid_vaccination/authentication/data/repository/auth_repository.dart';
 import 'package:covid_vaccination/authentication/presentation/components/authentication_button.dart';
 import 'package:covid_vaccination/authentication/presentation/components/header.dart';
 import 'package:covid_vaccination/authentication/presentation/components/hover_text_button.dart';
@@ -23,8 +22,6 @@ class _UserLoginPageState extends State<UserLoginPage> {
   TextEditingController _nidController = TextEditingController();
   TextEditingController _locationController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
-
-  AuthRepository _authRepository = AuthRepository();
 
   int index = 0;
 
@@ -229,10 +226,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
               age: int.parse(_ageController.text),
             );
 
-            print(
-                '${user.name}, ${user.email}, ${user.password}, ${user.phoneNo.toString()}, ${user.location}, ${user.occupation}, ${user.nid}, ${user.age.toString()}, ');
-
-            _authRepository.registerUser(user);
+            context.read<UserAuthCubit>().registerUser(user);
           },
         ),
         const Spacer(),

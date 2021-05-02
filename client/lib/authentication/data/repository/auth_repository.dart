@@ -7,28 +7,61 @@ import 'package:http/http.dart' as http;
 
 class AuthRepository {
   Future<void> registerUser(User user) async {
+    print(user.toJson());
     Uri uri = Uri.parse('$BASE_URL/users');
 
-    var response = await http.post(uri, body: user.toJson());
+    try {
+      var response = await http.post(
+        uri,
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+        body: jsonEncode(user.toJson()),
+      );
 
-    if (response.statusCode == 200) {
-      print('Created new user successfully');
+      var data = jsonDecode(response.body);
+      if (data['message'] == 'User has been added succesfully') {
+        print('User created successfully');
+      } else {
+        throw CustomException('Error creating user!');
+      }
+    } catch (e) {
+      throw CustomException('Server Error!');
     }
+
+    // try {
+    //   var response = await http.post(uri, body: user.toJson());
+
+    //   if (response.statusCode == 200) {
+    //     var data = jsonDecode(response.body);
+    //     if (data['message'] == 'User has been added succesfully') {
+    //       print('Created new user successfully');
+    //     } else {
+    //       throw CustomException('Error creating user.');
+    //     }
+    //   }
+    // } catch (e) {
+    //   throw CustomException('Server Error!');
+    // }
   }
 
   Future<User> loginUser(String email, String password) async {
     Uri uri = Uri.parse('$BASE_URL/user?email=$email&password=$password');
 
-    var response = await http.get(uri);
+    try {
+      var response = await http.get(uri);
 
-    if (response.statusCode == 200) {
-      var data = jsonDecode(response.body);
-      if (data.isNotEmpty) {
-        User user = User.fromJson(data[0]);
-        return user;
-      } else {
-        throw CustomException('No user found. Double check your spelling!');
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        if (data.isNotEmpty) {
+          User user = User.fromJson(data[0]);
+          return user;
+        } else {
+          throw CustomException('No user found. Double check your spelling!');
+        }
       }
+    } catch (e) {
+      throw CustomException('Server Error!');
     }
   }
 }

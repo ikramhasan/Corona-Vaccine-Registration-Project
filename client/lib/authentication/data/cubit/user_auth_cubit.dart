@@ -19,4 +19,14 @@ class UserAuthCubit extends Cubit<UserAuthState> {
       emit(UserAuthError(e.message));
     }
   }
+
+  Future<void> registerUser(User user) async {
+    emit(UserAuthLoading());
+    try {
+      await _authRepository.registerUser(user);
+      emit(UserAuthLoaded(user));
+    } on CustomException catch (e) {
+      emit(UserAuthError(e.message));
+    }
+  }
 }
