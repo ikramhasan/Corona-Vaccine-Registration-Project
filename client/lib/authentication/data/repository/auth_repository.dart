@@ -28,21 +28,6 @@ class AuthRepository {
     } catch (e) {
       throw CustomException('Server Error!');
     }
-
-    // try {
-    //   var response = await http.post(uri, body: user.toJson());
-
-    //   if (response.statusCode == 200) {
-    //     var data = jsonDecode(response.body);
-    //     if (data['message'] == 'User has been added succesfully') {
-    //       print('Created new user successfully');
-    //     } else {
-    //       throw CustomException('Error creating user.');
-    //     }
-    //   }
-    // } catch (e) {
-    //   throw CustomException('Server Error!');
-    // }
   }
 
   Future<User> loginUser(String email, String password) async {
