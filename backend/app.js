@@ -14,15 +14,6 @@ app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
 
-// Connect to Database
-// const pool = mysql.createPool({
-//   connectionLimit: 10,
-//   host: "localhost",
-//   user: "root",
-//   password: "",
-//   database: "covid vaccination",
-// });
-
 const pool = mysql.createPool({
   connectionLimit: 10,
   host: "sql6.freemysqlhosting.net",

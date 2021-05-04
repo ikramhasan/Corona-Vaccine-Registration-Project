@@ -6,7 +6,6 @@ import 'package:http/http.dart' as http;
 
 class AdminAuthRepository {
   registerAdmin(Admin admin) async {
-    print(admin.toJson());
     Uri uri = Uri.parse('$BASE_URL/admins');
 
     try {
@@ -19,7 +18,7 @@ class AdminAuthRepository {
       );
 
       var data = jsonDecode(response.body);
-      if (data['message'] == 'Admin has been added succesfully') {
+      if (data['message'] == 'admin has been added succesfully') {
         print('Admin created successfully');
       } else {
         throw CustomException('Error creating admin!');
@@ -38,6 +37,7 @@ class AdminAuthRepository {
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
         if (data.isNotEmpty) {
+          print(data[0]);
           Admin admin = Admin.fromJson(data[0]);
           return admin;
         } else {

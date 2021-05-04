@@ -9,7 +9,7 @@ class AdminHomePage extends StatelessWidget {
       builder: (context, state) {
         if (state is AdminAuthLoaded) {
           return Center(
-            child: Text(state.admin.toJson()),
+            child: Text(state.admin.toString()),
           );
         }
         return Center(

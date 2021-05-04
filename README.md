@@ -28,8 +28,8 @@ This is the final project of our CSE370 course (Database Systems) The idea is, u
 
 - [x] User login
 - [x] User registration
-- [ ] Admin login
-- [ ] Admin registration
+- [x] Admin login
+- [x] Admin registration
 - [ ] Update user info
 - [ ] Update admin info?
 
