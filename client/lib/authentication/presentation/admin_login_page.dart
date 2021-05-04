@@ -1,7 +1,11 @@
+import 'package:covid_vaccination/app/presentation/admin_home_page.dart';
+import 'package:covid_vaccination/authentication/data/cubit/admin_auth_cubit.dart';
+import 'package:covid_vaccination/authentication/data/models/admin.dart';
 import 'package:covid_vaccination/authentication/presentation/components/authentication_button.dart';
 import 'package:covid_vaccination/authentication/presentation/components/header.dart';
 import 'package:covid_vaccination/authentication/presentation/components/hover_text_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
 class AdminLoginPage extends StatefulWidget {
@@ -11,6 +15,9 @@ class AdminLoginPage extends StatefulWidget {
 
 class _AdminLoginPageState extends State<AdminLoginPage> {
   bool isLogin = true;
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +45,40 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                     borderRadius: BorderRadius.circular(6),
                   ),
                   padding: EdgeInsets.all(16),
-                  child: isLogin ? buildLoginColumn() : buildSignupColumn(),
+                  child: BlocConsumer(
+                    builder: (context, state) {
+                      if (state is AdminAuthInitial) {
+                        return isLogin
+                            ? buildLoginColumn()
+                            : buildSignupColumn();
+                      }
+
+                      if (state is AdminAuthLoading) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+
+                      return isLogin ? buildLoginColumn() : buildSignupColumn();
+                    },
+                    listener: (context, state) {
+                      if (state is AdminAuthLoaded) {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => AdminHomePage(),
+                          ),
+                        );
+                      }
+
+                      if (state is AdminAuthError) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(state.message),
+                          ),
+                        );
+                      }
+                    },
+                  ),
                 ),
               ],
             ),
@@ -65,6 +105,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
         ),
         const Spacer(),
         TextFormField(
+          controller: _nameController,
           decoration: InputDecoration(
             labelText: 'Name',
             labelStyle: TextStyle(fontSize: 22),
@@ -79,6 +120,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
         ),
         const SizedBox(height: 32),
         TextFormField(
+          controller: _emailController,
           decoration: InputDecoration(
             labelText: 'Email',
             labelStyle: TextStyle(fontSize: 22),
@@ -93,6 +135,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
         ),
         const SizedBox(height: 32),
         TextFormField(
+          controller: _passwordController,
           decoration: InputDecoration(
             labelText: 'Password',
             labelStyle: TextStyle(fontSize: 22),
@@ -108,7 +151,15 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
         const SizedBox(height: 32),
         AuthenticationButton(
           text: 'Signup',
-          onTap: () {},
+          onTap: () {
+            Admin admin = Admin(
+              name: _nameController.text,
+              email: _emailController.text,
+              password: _passwordController.text,
+            );
+
+            context.read<AdminAuthCubit>().registerAdmin(admin);
+          },
         ),
         const Spacer(),
         Align(
@@ -144,6 +195,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
         ),
         const Spacer(),
         TextFormField(
+          controller: _emailController,
           decoration: InputDecoration(
             labelText: 'Email',
             labelStyle: TextStyle(fontSize: 22),
@@ -158,6 +210,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
         ),
         const SizedBox(height: 32),
         TextFormField(
+          controller: _passwordController,
           decoration: InputDecoration(
             labelText: 'Password',
             labelStyle: TextStyle(fontSize: 22),
@@ -173,7 +226,11 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
         const SizedBox(height: 32),
         AuthenticationButton(
           text: 'LOGIN',
-          onTap: () {},
+          onTap: () {
+            context
+                .read<AdminAuthCubit>()
+                .loginAdmin(_emailController.text, _passwordController.text);
+          },
         ),
         const Spacer(),
         Align(

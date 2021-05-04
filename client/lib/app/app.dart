@@ -1,3 +1,4 @@
+import 'package:covid_vaccination/authentication/data/cubit/admin_auth_cubit.dart';
 import 'package:covid_vaccination/authentication/data/cubit/user_auth_cubit.dart';
 import 'package:covid_vaccination/authentication/presentation/landing_page.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +10,11 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
+        BlocProvider<UserAuthCubit>(
           create: (context) => UserAuthCubit(),
+        ),
+        BlocProvider<AdminAuthCubit>(
+          create: (context) => AdminAuthCubit(),
         )
       ],
       child: MaterialApp(
