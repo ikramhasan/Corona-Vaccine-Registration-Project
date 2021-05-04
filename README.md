@@ -12,12 +12,17 @@
 <img alt="Heroku" src="https://img.shields.io/github/license/Ileriayo/markdown-badges?style=for-the-badge"/>
 </p>
 
-# Corona Vaccine Registration (CSE 370 Project)
+# Corona Vaccine Registration (CSE 370 Project) 💉
 
-## ER Diagram
-<img src="documentation/images/covid.png" alt="drawing"/>
+This is the final project of our CSE370 course (Database Systems) The idea is, users can apply for the vaccination, and admins can approve, reject, or confirm their applications. The general purpose for this project is to make the vaccination process easier for everyone, have a database of vaccinated and non-vaccinated people, and last but not the least, keep track of vaccine doses. The frontend is built using flutter, the backend using nodejs and express, and the database using mysql and apache. The website for the project can be found [here](https://covidvaccineregistration.web.app/)
 
-## Contributions:
+## ER Diagram (needs change) 🔗
+<img src="documentation/images/er.png" alt="drawing"/>
+
+## Schema (needs change) 📑 
+<img src="documentation/images/schema.png" alt="drawing"/>
+
+## Contributions 🐱‍🏍
 
 ### Ikramul Hasan (19101362)
 
