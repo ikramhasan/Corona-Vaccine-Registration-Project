@@ -45,7 +45,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                     borderRadius: BorderRadius.circular(6),
                   ),
                   padding: EdgeInsets.all(16),
-                  child: BlocConsumer(
+                  child: BlocConsumer<AdminAuthCubit, AdminAuthState>(
                     builder: (context, state) {
                       if (state is AdminAuthInitial) {
                         return isLogin

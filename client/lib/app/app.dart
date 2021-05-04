@@ -15,7 +15,7 @@ class App extends StatelessWidget {
         ),
         BlocProvider<AdminAuthCubit>(
           create: (context) => AdminAuthCubit(),
-        )
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
