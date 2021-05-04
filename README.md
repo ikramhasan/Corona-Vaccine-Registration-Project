@@ -14,36 +14,28 @@
 - [ ] Update user info
 - [ ] Update admin info?
 
-### Merazul Islam Dihan(19101118)
+### Merazul Islam Dihan (19101118)
 
 - [ ] Admin can search for applications based on location, age group, user name
 - [ ] Admin can view statistics - ie. how many applications were submitted day wise
 - [ ] Admin can view all vaccine applications
 
-### Sadia Mahmud(19101320)
+### Sadia Mahmud (19101320)
 
 - [ ] Admin can change the vaccine status - (Pending, Approve, Reject, Delivered) - Multi selection
 - [ ] Admin can also give comments
 - [ ] ???
 
-### Towsif Tazwar Zia(19301266)
+### Towsif Tazwar Zia (19301266)
 
 - [ ] Users can track their vaccine deilvery status
 - [ ] Admin can select their vaccination centre
 - [ ] ???
-### Farhan Anzum Oni(19101048)
+### Farhan Anzum Oni (19101048)
 
 - [ ] User can apply for vaccine
 - [ ] User can view their vaccine status, authority comments
 - [ ] User can view their next dose of vaccine
-  
-
-## Members:
- * Ikramul Hasan - 19101362
- * Merazul Islam Dihan - 19101118
- * Sadia Mahmud - 19101320
- * Towsif Tazwar Zia - 19301266 
- * Farhan Anzum Oni - 19101048
 
 ## Contributors ✨
 
@@ -57,3 +49,6 @@ Thanks goes to these wonderful people
     </td>
   </tr>
 </table>
+
+## Licenses
+[MIT License](LICENSE) 
