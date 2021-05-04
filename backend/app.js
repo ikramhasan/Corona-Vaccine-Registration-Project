@@ -196,3 +196,26 @@ app.put("/users", (req, res) => {
     );
   });
 });
+
+// Create a new user
+app.post("/admins", (req, res) => {
+  pool.getConnection((error, connection) => {
+    if (error) throw error;
+    console.log(`Connect to database as ${connection.threadId}`);
+
+    const params = req.body;
+
+    connection.query("INSERT INTO admin SET ?", params, (error, rows) => {
+      connection.release();
+
+      if (!error) {
+        res.status(200).send({
+          status: 200,
+          message: "admin has been added succesfully",
+        });
+      } else {
+        console.log(error);
+      }
+    });
+  });
+});

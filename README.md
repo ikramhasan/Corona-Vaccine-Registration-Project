@@ -14,7 +14,7 @@
 
 # Corona Vaccine Registration (CSE 370 Project) 💉
 
-This is the final project of our CSE370 course (Database Systems) The idea is, users can apply for the vaccination, and admins can approve, reject, or confirm their applications. The general purpose for this project is to make the vaccination process easier for everyone, have a database of vaccinated and non-vaccinated people, and last but not the least, keep track of vaccine doses. The frontend is built using flutter, the backend using nodejs and express, and the database using mysql and apache. The website for the project can be found [here](https://covidvaccineregistration.web.app/)
+This is the final project of our CSE370 course (Database Systems) The idea is, users can apply for the vaccination, and admins can approve, reject, or confirm their applications. The general purpose of this project is to make the vaccination process easier for everyone, have a database of vaccinated and non-vaccinated people, and last but not the least, keep track of vaccine doses. The frontend is built using flutter, the backend using nodejs and express, and the database using mysql and apache. The website for the project can be found [here](https://covidvaccineregistration.web.app/)
 
 ## ER Diagram (needs change) 🔗
 <img src="documentation/images/er.png" alt="drawing"/>
@@ -41,13 +41,13 @@ This is the final project of our CSE370 course (Database Systems) The idea is, u
 
 ### Sadia Mahmud (19101320)
 
-- [ ] Admin can change the vaccine status - (Pending, Approve, Reject, Delivered) - Multi selection
+- [ ] Admin can change the vaccine status - (Pending, Approve, Reject, Delivered) - Multi-selection
 - [ ] Admin can also give comments
 - [ ] ???
 
 ### Towsif Tazwar Zia (19301266)
 
-- [ ] Users can track their vaccine deilvery status
+- [ ] Users can track their vaccine delivery status
 - [ ] Admin can select their vaccination centre
 - [ ] ???
 ### Farhan Anzum Oni (19101048)
