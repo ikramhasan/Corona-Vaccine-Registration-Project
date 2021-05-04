@@ -8,6 +8,22 @@ class AdminAuthInitial extends AdminAuthState {}
 class AdminAuthLoading extends AdminAuthState {}
 
 class AdminAuthLoaded extends AdminAuthState {
+  final Admin admin;
+
+  AdminAuthLoaded(this.admin);
+
+  @override
+  String toString() => 'AdminAuthLoaded(admin: $admin)';
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is AdminAuthLoaded && other.admin == admin;
+  }
+
+  @override
+  int get hashCode => admin.hashCode;
 }
 
 class AdminAuthError extends AdminAuthState {
@@ -21,9 +37,8 @@ class AdminAuthError extends AdminAuthState {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
-    return other is AdminAuthError &&
-      other.message == message;
+
+    return other is AdminAuthError && other.message == message;
   }
 
   @override

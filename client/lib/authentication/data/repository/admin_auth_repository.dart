@@ -1,14 +1,13 @@
 import 'dart:convert';
-
-import 'package:covid_vaccination/authentication/data/models/user.dart';
+import 'package:covid_vaccination/authentication/data/models/admin.dart';
 import 'package:covid_vaccination/core/constants/constants.dart';
 import 'package:covid_vaccination/core/errors/custom_exception.dart';
 import 'package:http/http.dart' as http;
 
-class AuthRepository {
-  registerUser(User user) async {
-    print(user.toJson());
-    Uri uri = Uri.parse('$BASE_URL/users');
+class AdminAuthRepository {
+  registerAdmin(Admin admin) async {
+    print(admin.toJson());
+    Uri uri = Uri.parse('$BASE_URL/admins');
 
     try {
       var response = await http.post(
@@ -16,22 +15,22 @@ class AuthRepository {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
         },
-        body: jsonEncode(user.toJson()),
+        body: jsonEncode(admin.toJson()),
       );
 
       var data = jsonDecode(response.body);
-      if (data['message'] == 'User has been added succesfully') {
-        print('User created successfully');
+      if (data['message'] == 'Admin has been added succesfully') {
+        print('Admin created successfully');
       } else {
-        throw CustomException('Error creating user!');
+        throw CustomException('Error creating admin!');
       }
     } catch (e) {
       throw CustomException('Server Error!');
     }
   }
 
-  loginUser(String email, String password) async {
-    Uri uri = Uri.parse('$BASE_URL/user?email=$email&password=$password');
+  loginAdmin(String email, String password) async {
+    Uri uri = Uri.parse('$BASE_URL/admin?email=$email&password=$password');
 
     try {
       var response = await http.get(uri);
@@ -39,10 +38,10 @@ class AuthRepository {
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
         if (data.isNotEmpty) {
-          User user = User.fromJson(data[0]);
-          return user;
+          Admin admin = Admin.fromJson(data[0]);
+          return admin;
         } else {
-          throw CustomException('No user found. Double check your spelling!');
+          throw CustomException('No admin found. Double check your spelling!');
         }
       }
     } catch (e) {
