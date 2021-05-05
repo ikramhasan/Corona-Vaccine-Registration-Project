@@ -235,3 +235,26 @@ app.get("/admin", (req, res) => {
     );
   });
 });
+
+
+// ----- Merazul Islam Dihan -------
+
+// "SELECT * FROM application Where location=$location"
+
+// Get all data from submit table.
+app.get("/submit", (req, res) => {
+  pool.getConnection((error, connection) => {
+    if (error) throw error;
+    console.log(`Connect to database as ${connection.threadId}`);
+
+    connection.query("SELECT * from submit", (error, rows) => {
+      connection.release();
+
+      if (!error) {
+        res.send(rows);
+      } else {
+        console.log(error);
+      }
+    });
+  });
+});
