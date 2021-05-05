@@ -242,7 +242,7 @@ app.get("/admin", (req, res) => {
 // "SELECT * FROM application Where location=$location"
 
 // Get all data from submit table.
-app.get("/submit", (req, res) => {
+app.get("/submits", (req, res) => {
   pool.getConnection((error, connection) => {
     if (error) throw error;
     console.log(`Connect to database as ${connection.threadId}`);
@@ -261,7 +261,7 @@ app.get("/submit", (req, res) => {
 });
 
 // Get an application and user by id
-app.get("/admin", (req, res) => {
+app.get("/submit", (req, res) => {
   pool.getConnection((error, connection) => {
     if (error) throw error;
     console.log(`Connect to database as ${connection.threadId}`);
