@@ -255,6 +255,32 @@ app.get("/submit", (req, res) => {
       } else {
         console.log(error);
       }
+
     });
+  });
+});
+
+// Get an application and user by id
+app.get("/admin", (req, res) => {
+  pool.getConnection((error, connection) => {
+    if (error) throw error;
+    console.log(`Connect to database as ${connection.threadId}`);
+
+    const user_id = req.query.user_id;
+    const application_id = req.query.application_id;
+
+    connection.query(
+      "SELECT * from submit WHERE user_id = ? AND application_id = ?",
+      [user_id, application_id],
+      (error, row) => {
+        connection.release();
+
+        if (!error) {
+          res.status(200).send(row);
+        } else {
+          console.log(error);
+        }
+      }
+    );
   });
 });
