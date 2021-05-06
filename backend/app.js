@@ -1,9 +1,10 @@
 const express = require("express");
-var cors = require('cors')
+var cors = require("cors");
 const mysql = require("mysql");
 
 const app = express();
 const port = process.env.PORT || 5000;
+const userRouter = express.Router();
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
@@ -14,21 +15,28 @@ app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
 
+// const pool = mysql.createPool({
+//   connectionLimit: 10,
+//   host: "sql6.freemysqlhosting.net",
+//   user: "sql6409757",
+//   password: "3eVEN6Axak",
+//   database: "sql6409757",
+// });
 const pool = mysql.createPool({
   connectionLimit: 10,
-  host: "sql6.freemysqlhosting.net",
-  user: "sql6409757",
-  password: "3eVEN6Axak",
-  database: "sql6409757",
+  host: "localhost",
+  port: 3306,
+  user: "root",
+  password: "",
+  database: "covid vaccination",
 });
 
 // Connect to server
 app.get("/", (req, res) => {
-    res.send('Server running...');
+  res.send("Server running...");
 });
 
-// Get all users
-app.get("/users", (req, res) => {
+const getAllUsers = (req, res) => {
   pool.getConnection((error, connection) => {
     if (error) throw error;
     console.log(`Connect to database as ${connection.threadId}`);
@@ -43,10 +51,9 @@ app.get("/users", (req, res) => {
       }
     });
   });
-});
+};
 
-// Get an user by id
-app.get("/users/:id", (req, res) => {
+const getUserById = (req, res) => {
   pool.getConnection((error, connection) => {
     if (error) throw error;
     console.log(`Connect to database as ${connection.threadId}`);
@@ -65,10 +72,9 @@ app.get("/users/:id", (req, res) => {
       }
     );
   });
-});
+};
 
-// Get an user by email and password
-app.get("/user", (req, res) => {
+const getUserByEmailAndPass = (req, res) => {
   pool.getConnection((error, connection) => {
     if (error) throw error;
     console.log(`Connect to database as ${connection.threadId}`);
@@ -90,10 +96,9 @@ app.get("/user", (req, res) => {
       }
     );
   });
-});
+};
 
-// Delete an user
-app.delete("/users/:id", (req, res) => {
+const deleteUser = (req, res) => {
   pool.getConnection((error, connection) => {
     if (error) throw error;
     console.log(`Connect to database as ${connection.threadId}`);
@@ -115,10 +120,9 @@ app.delete("/users/:id", (req, res) => {
       }
     );
   });
-});
+};
 
-// Create a new user
-app.post("/users", (req, res) => {
+const createUser = (req, res) => {
   pool.getConnection((error, connection) => {
     if (error) throw error;
     console.log(`Connect to database as ${connection.threadId}`);
@@ -138,10 +142,9 @@ app.post("/users", (req, res) => {
       }
     });
   });
-});
+};
 
-// Update an existing user
-app.put("/users", (req, res) => {
+const updateUser = (req, res) => {
   pool.getConnection((error, connection) => {
     if (error) throw error;
     console.log(`Connect to database as ${connection.threadId}`);
@@ -186,10 +189,9 @@ app.put("/users", (req, res) => {
       }
     );
   });
-});
+};
 
-// Create a new user
-app.post("/admins", (req, res) => {
+const createAdmin = (req, res) => {
   pool.getConnection((error, connection) => {
     if (error) throw error;
     console.log(`Connect to database as ${connection.threadId}`);
@@ -209,10 +211,9 @@ app.post("/admins", (req, res) => {
       }
     });
   });
-});
+};
 
-// Get an admin by email and password
-app.get("/admin", (req, res) => {
+const getAdminByEmailAndPass = (req, res) => {
   pool.getConnection((error, connection) => {
     if (error) throw error;
     console.log(`Connect to database as ${connection.threadId}`);
@@ -234,31 +235,63 @@ app.get("/admin", (req, res) => {
       }
     );
   });
+};
+
+app.patch('/users/:id', (req, res) => {
+
 });
 
+app.use('/api/v1/users', userRouter);
+
+userRouter
+  .route('/')
+  .get(getAllUsers)
+  .post(createUser)
+  .put(updateUser)
+  .delete(deleteUser);
+
+  userRouter.route("/:id").get(getUserById);
+
+// Get an user by email and password
+app.get("/user", getUserByEmailAndPass);
+
+// Delete an user
+// app.delete("/users/:id", deleteUser);
+
+// Create a new user
+// app.post("/users", createUser);
+
+// Update an existing user
+// app.put("/users", updateUser);
+
+// Create a new admin
+app.post("/admins", createAdmin);
+
+// Get an admin by email and password
+app.get("/admin", getAdminByEmailAndPass);
 
 // ----- Merazul Islam Dihan -------
 
 // "SELECT * FROM application Where location=$location"
 
 // Get all data from submit table.
-app.get("/submits", (req, res) => {
-  pool.getConnection((error, connection) => {
-    if (error) throw error;
-    console.log(`Connect to database as ${connection.threadId}`);
+// app.get("/submits", (req, res) => {
+//   pool.getConnection((error, connection) => {
+//     if (error) throw error;
+//     console.log(`Connect to database as ${connection.threadId}`);
 
-    connection.query("SELECT * from submit", (error, rows) => {
-      connection.release();
+//     connection.query("SELECT * from submit", (error, rows) => {
+//       connection.release();
 
-      if (!error) {
-        res.send(rows);
-      } else {
-        console.log(error);
-      }
+//       if (!error) {
+//         res.send(rows);
+//       } else {
+//         console.log(error);
+//       }
 
-    });
-  });
-});
+//     });
+//   });
+// });
 
 // Get an application and user by id
 app.get("/submit", (req, res) => {
@@ -277,6 +310,51 @@ app.get("/submit", (req, res) => {
 
         if (!error) {
           res.status(200).send(row);
+        } else {
+          console.log(error);
+        }
+      }
+    );
+  });
+});
+
+// Get all user and assosiated application by username
+app.get("/submits", (req, res) => {
+  pool.getConnection((error, connection) => {
+    if (error) throw error;
+    console.log(`Connect to database as ${connection.threadId}`);
+
+    const userName = req.query.userName;
+
+    connection.query(
+      "SELECT * from user u inner join application a on u.user_id=a.application_id Where u.name= ?",
+      [userName],
+      (error, rows) => {
+        connection.release();
+
+        if (!error) {
+          res.send(rows);
+        } else {
+          console.log(error);
+        }
+      }
+    );
+  });
+});
+
+// Get all user and assosiated application
+app.get("/submitsz", (req, res) => {
+  pool.getConnection((error, connection) => {
+    if (error) throw error;
+    console.log(`Connect to database as ${connection.threadId}`);
+
+    connection.query(
+      "SELECT * from user u inner join application a on u.user_id = a.application_id",
+      (error, rows) => {
+        connection.release();
+
+        if (!error) {
+          res.send(rows);
         } else {
           console.log(error);
         }
