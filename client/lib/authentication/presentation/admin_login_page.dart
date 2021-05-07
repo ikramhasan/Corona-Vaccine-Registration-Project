@@ -1,9 +1,11 @@
 import 'package:covid_vaccination/app/presentation/admin_home_page.dart';
+import 'package:covid_vaccination/app/presentation/components/loading_widget.dart';
 import 'package:covid_vaccination/authentication/data/cubit/admin_auth_cubit.dart';
 import 'package:covid_vaccination/authentication/data/models/admin.dart';
 import 'package:covid_vaccination/authentication/presentation/components/authentication_button.dart';
 import 'package:covid_vaccination/authentication/presentation/components/header.dart';
 import 'package:covid_vaccination/authentication/presentation/components/hover_text_button.dart';
+import 'package:covid_vaccination/authentication/presentation/components/login_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
@@ -54,20 +56,20 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                       }
 
                       if (state is AdminAuthLoading) {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
+                        return LoadingWidget();
                       }
 
                       return isLogin ? buildLoginColumn() : buildSignupColumn();
                     },
                     listener: (context, state) {
                       if (state is AdminAuthLoaded) {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => AdminHomePage(),
-                          ),
-                        );
+                        !isLogin
+                            ? showLoginDialog(context)
+                            : Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => AdminHomePage(),
+                                ),
+                              );
                       }
 
                       if (state is AdminAuthError) {

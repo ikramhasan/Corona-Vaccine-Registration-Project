@@ -1,9 +1,11 @@
-import 'package:covid_vaccination/app/presentation/home_page.dart';
+import 'package:covid_vaccination/app/presentation/components/loading_widget.dart';
+import 'package:covid_vaccination/app/presentation/user_home_page.dart';
 import 'package:covid_vaccination/authentication/data/cubit/user_auth_cubit.dart';
 import 'package:covid_vaccination/authentication/data/models/user.dart';
 import 'package:covid_vaccination/authentication/presentation/components/authentication_button.dart';
 import 'package:covid_vaccination/authentication/presentation/components/header.dart';
 import 'package:covid_vaccination/authentication/presentation/components/hover_text_button.dart';
+import 'package:covid_vaccination/authentication/presentation/components/login_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
@@ -79,12 +81,14 @@ class _UserLoginPageState extends State<UserLoginPage> {
                       }
 
                       if (state is UserAuthLoaded) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => HomePage(),
-                          ),
-                        );
+                        index == 2
+                            ? showLoginDialog(context)
+                            : Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => UserHomePage(),
+                                ),
+                              );
                       }
                     },
                     builder: (context, state) {
@@ -93,9 +97,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
                       }
 
                       if (state is UserAuthLoading) {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
+                        return LoadingWidget();
                       }
 
                       return getWidget(index);

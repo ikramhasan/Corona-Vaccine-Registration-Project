@@ -1,3 +1,4 @@
+import 'package:covid_vaccination/authentication/presentation/landing_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,11 @@ showLoginDialog(BuildContext context) {
       actions: [
         TextButton(
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                  builder: (context) => LandingPage(),
+                ),
+                (route) => false);
           },
           child: Text('Close'),
         ),
