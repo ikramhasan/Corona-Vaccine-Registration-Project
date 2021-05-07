@@ -1,9 +1,10 @@
 const express = require("express");
 var cors = require("cors");
 
-const userRouter = require('./routes/userRoutes');
-const adminRouter = require('./routes/adminRoutes');
-const pool = require('./databaseConnection');
+const userRouter = require("./routes/userRoutes");
+const adminRouter = require("./routes/adminRoutes");
+const applicationRouter = require("./routes/applicationRoutes");
+const pool = require("./databaseConnection");
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 
 app.use("/api/v1/admins", adminRouter);
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/applications", applicationRouter);
 
 // ----- Merazul Islam Dihan -------
 
@@ -106,6 +108,5 @@ app.get("/submitsz", (req, res) => {
     );
   });
 });
-
 
 module.exports = app;
