@@ -26,4 +26,15 @@ class ApplicationCubit extends Cubit<ApplicationState> {
       emit(ApplicationError(e.message));
     }
   }
+
+  Future<void> createApplication(Application application) async {
+    emit(ApplicationLoading());
+
+    try {
+      await _repository.createApplication(application);
+      emit(ApplicationLoaded(application));
+    } on CustomException catch (e) {
+      emit(ApplicationError(e.message));
+    }
+  }
 }

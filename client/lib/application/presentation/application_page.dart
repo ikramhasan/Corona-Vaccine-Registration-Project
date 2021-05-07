@@ -1,5 +1,8 @@
+import 'package:covid_vaccination/app/presentation/components/error_dialogue.dart';
 import 'package:covid_vaccination/app/presentation/components/loading_widget.dart';
+import 'package:covid_vaccination/app/presentation/user_home_page.dart';
 import 'package:covid_vaccination/application/data/cubit/application_cubit.dart';
+import 'package:covid_vaccination/application/data/models/application.dart';
 import 'package:covid_vaccination/application/presentation/components/application_form.dart';
 import 'package:covid_vaccination/authentication/presentation/components/authentication_button.dart';
 import 'package:covid_vaccination/authentication/presentation/components/header.dart';
@@ -21,7 +24,9 @@ class ApplicationPage extends StatelessWidget {
             Spacer(),
             BlocConsumer<ApplicationCubit, ApplicationState>(
               listener: (context, state) {
-                // TODO: implement listener
+                if (state is ApplicationError) {
+                  showErrorDialogue(context, state.error);
+                }
               },
               builder: (context, state) {
                 if (state is ApplicationLoading) {
@@ -43,12 +48,17 @@ class ApplicationPage extends StatelessWidget {
                 }
 
                 if (state is ApplicationLoaded) {
-                  return Text(state.application.toString());
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                      builder: (context) => UserHomePage(),
+                    ),
+                    (route) => false,
+                  );
                 }
 
                 return Center(
                   child: TextButton(
-                    child: Text('press'),
+                    child: Text('GO BACK'),
                     onPressed: () {},
                   ),
                 );

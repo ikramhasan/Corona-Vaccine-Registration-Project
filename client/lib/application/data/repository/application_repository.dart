@@ -25,4 +25,30 @@ class ApplicationRepository {
       throw CustomException('Server Error!');
     }
   }
+
+  createApplication(Application application) async {
+    Uri uri = Uri.parse('$BASE_URL/applications');
+
+    try {
+      var response = await http.post(
+        uri,
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+        body: jsonEncode(application.toJson()),
+      );
+
+      var data = jsonDecode(response.body);
+
+      print(data);
+
+      if (data['status'] == 'fail') {
+        throw CustomException('Error creating application!');
+      } else {
+        print('Application created successfully');
+      }
+    } catch (e) {
+      throw CustomException('Server Error!');
+    }
+  }
 }

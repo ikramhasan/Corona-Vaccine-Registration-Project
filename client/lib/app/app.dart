@@ -32,7 +32,7 @@ class App extends StatelessWidget {
           disabledColor: Color(0xFF8F909A),
           fontFamily: GoogleFonts.poppins().fontFamily,
         ),
-        home: ApplicationPage(),
+        home: LandingPage(),
       ),
     );
   }

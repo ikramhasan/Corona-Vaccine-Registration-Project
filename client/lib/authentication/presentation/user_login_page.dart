@@ -1,5 +1,6 @@
 import 'package:covid_vaccination/app/presentation/components/loading_widget.dart';
 import 'package:covid_vaccination/app/presentation/user_home_page.dart';
+import 'package:covid_vaccination/application/presentation/application_page.dart';
 import 'package:covid_vaccination/authentication/data/cubit/user_auth_cubit.dart';
 import 'package:covid_vaccination/authentication/data/models/user.dart';
 import 'package:covid_vaccination/authentication/presentation/components/authentication_button.dart';
@@ -86,7 +87,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
                             : Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => UserHomePage(),
+                                  builder: (context) => ApplicationPage(),
                                 ),
                               );
                       }

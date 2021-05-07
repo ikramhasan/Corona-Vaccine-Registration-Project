@@ -1,4 +1,5 @@
 import 'package:covid_vaccination/application/data/cubit/application_cubit.dart';
+import 'package:covid_vaccination/application/data/models/application.dart';
 import 'package:covid_vaccination/authentication/data/cubit/user_auth_cubit.dart';
 import 'package:covid_vaccination/authentication/presentation/components/authentication_button.dart';
 import 'package:flutter/material.dart';
@@ -63,9 +64,14 @@ class _ApplicationFormState extends State<ApplicationForm> {
             text: 'Select',
             onTap: () {
               if (userState is UserAuthLoaded) {
-                // context
-                //     .read<ApplicationCubit>()
-                //     .getApplication(userState.user.userId);
+                Application application = Application(
+                  userId: userState.user.userId,
+                  submissionDate: DateTime.now(),
+                  vaccinationCenter: center,
+                  adminComment: '',
+                );
+
+                context.read<ApplicationCubit>().createApplication(application);
               }
             },
           ),
