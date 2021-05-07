@@ -1,3 +1,4 @@
+import 'package:covid_vaccination/app/presentation/user_home_page.dart';
 import 'package:covid_vaccination/application/data/cubit/application_cubit.dart';
 import 'package:covid_vaccination/application/presentation/application_page.dart';
 import 'package:covid_vaccination/authentication/data/cubit/admin_auth_cubit.dart';
@@ -32,7 +33,7 @@ class App extends StatelessWidget {
           disabledColor: Color(0xFF8F909A),
           fontFamily: GoogleFonts.poppins().fontFamily,
         ),
-        home: LandingPage(),
+        home: UserHomePage(),
       ),
     );
   }

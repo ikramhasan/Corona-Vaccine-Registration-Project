@@ -42,8 +42,8 @@ This is the final project of our CSE370 course (Database Systems) The idea is, u
 ### Sadia Mahmud (19101320)
 
 - [ ] Admin can change the vaccine status - (Pending, Approve, Reject, Delivered) - Multi-selection
-- [ ] Admin can also give comments
-- [ ] ???
+- [x] Admin can also give comments
+- [ ] Create new dose
 
 ### Towsif Tazwar Zia (19301266)
 

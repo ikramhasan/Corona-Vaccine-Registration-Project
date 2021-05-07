@@ -72,6 +72,9 @@ class _ApplicationFormState extends State<ApplicationForm> {
                 );
 
                 context.read<ApplicationCubit>().createApplication(application);
+                // context
+                //     .read<ApplicationCubit>()
+                //     .getApplication(userState.user.userId);
               }
             },
           ),

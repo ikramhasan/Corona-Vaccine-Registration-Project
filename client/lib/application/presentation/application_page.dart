@@ -1,6 +1,7 @@
 import 'package:covid_vaccination/app/presentation/components/error_dialogue.dart';
 import 'package:covid_vaccination/app/presentation/components/loading_widget.dart';
 import 'package:covid_vaccination/app/presentation/user_home_page.dart';
+import 'package:covid_vaccination/app/presentation/wrappers/user_wrapper.dart';
 import 'package:covid_vaccination/application/data/cubit/application_cubit.dart';
 import 'package:covid_vaccination/application/data/models/application.dart';
 import 'package:covid_vaccination/application/presentation/components/application_form.dart';
@@ -27,6 +28,15 @@ class ApplicationPage extends StatelessWidget {
                 if (state is ApplicationError) {
                   showErrorDialogue(context, state.error);
                 }
+
+                if (state is ApplicationLoaded) {
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                      builder: (context) => UserWrapper(),
+                    ),
+                    (route) => false,
+                  );
+                }
               },
               builder: (context, state) {
                 if (state is ApplicationLoading) {
@@ -47,21 +57,7 @@ class ApplicationPage extends StatelessWidget {
                   );
                 }
 
-                if (state is ApplicationLoaded) {
-                  Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(
-                      builder: (context) => UserHomePage(),
-                    ),
-                    (route) => false,
-                  );
-                }
-
-                return Center(
-                  child: TextButton(
-                    child: Text('GO BACK'),
-                    onPressed: () {},
-                  ),
-                );
+                return LoadingWidget();
               },
             ),
             Spacer(),

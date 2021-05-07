@@ -32,7 +32,9 @@ class ApplicationCubit extends Cubit<ApplicationState> {
 
     try {
       await _repository.createApplication(application);
-      emit(ApplicationLoaded(application));
+      Application apl =
+          await _repository.getApplicationById(application.userId);
+      emit(ApplicationLoaded(apl));
     } on CustomException catch (e) {
       emit(ApplicationError(e.message));
     }
