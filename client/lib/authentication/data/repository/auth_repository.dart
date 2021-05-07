@@ -31,7 +31,7 @@ class AuthRepository {
   }
 
   loginUser(String email, String password) async {
-    Uri uri = Uri.parse('$BASE_URL/user?email=$email&password=$password');
+    Uri uri = Uri.parse('$BASE_URL/users?email=$email&password=$password');
 
     try {
       var response = await http.get(uri);

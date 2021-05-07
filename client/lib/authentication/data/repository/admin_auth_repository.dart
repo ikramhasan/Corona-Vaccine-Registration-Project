@@ -29,7 +29,7 @@ class AdminAuthRepository {
   }
 
   loginAdmin(String email, String password) async {
-    Uri uri = Uri.parse('$BASE_URL/admin?email=$email&password=$password');
+    Uri uri = Uri.parse('$BASE_URL/admins?email=$email&password=$password');
 
     try {
       var response = await http.get(uri);
@@ -39,6 +39,7 @@ class AdminAuthRepository {
         if (data.isNotEmpty) {
           print(data[0]);
           Admin admin = Admin.fromJson(data[0]);
+          print(admin);
           return admin;
         } else {
           throw CustomException('No admin found. Double check your spelling!');
