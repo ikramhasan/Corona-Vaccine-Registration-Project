@@ -1,13 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:covid_vaccination/authentication/data/models/user.dart';
-import 'package:covid_vaccination/authentication/data/repository/auth_repository.dart';
+import 'package:covid_vaccination/authentication/data/repository/user_auth_repository.dart';
 import 'package:covid_vaccination/core/errors/custom_exception.dart';
 import 'package:meta/meta.dart';
 
 part 'user_auth_state.dart';
 
 class UserAuthCubit extends Cubit<UserAuthState> {
-  final AuthRepository _authRepository = AuthRepository();
+  final UserAuthRepository _authRepository = UserAuthRepository();
   UserAuthCubit() : super(UserAuthInitial());
 
   Future<void> loginUser(String email, String password) async {

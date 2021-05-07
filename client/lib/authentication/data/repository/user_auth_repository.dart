@@ -5,7 +5,7 @@ import 'package:covid_vaccination/core/constants/constants.dart';
 import 'package:covid_vaccination/core/errors/custom_exception.dart';
 import 'package:http/http.dart' as http;
 
-class AuthRepository {
+class UserAuthRepository {
   registerUser(User user) async {
     print(user.toJson());
     Uri uri = Uri.parse('$BASE_URL/users');
