@@ -4,6 +4,7 @@ const mysql = require("mysql");
 
 const userRouter = require('./routes/userRoutes');
 const adminRouter = require('./routes/adminRoutes');
+const pool = require('./databaseConnection');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -17,21 +18,15 @@ app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
 
+
 // const pool = mysql.createPool({
 //   connectionLimit: 10,
-//   host: "sql6.freemysqlhosting.net",
-//   user: "sql6409757",
-//   password: "3eVEN6Axak",
-//   database: "sql6409757",
+//   host: "localhost",
+//   port: 3306,
+//   user: "root",
+//   password: "",
+//   database: "covid vaccination",
 // });
-const pool = mysql.createPool({
-  connectionLimit: 10,
-  host: "localhost",
-  port: 3306,
-  user: "root",
-  password: "",
-  database: "covid vaccination",
-});
 
 // Connect to server
 app.get("/", (req, res) => {
