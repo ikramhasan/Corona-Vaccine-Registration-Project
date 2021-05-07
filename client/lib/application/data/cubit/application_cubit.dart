@@ -16,6 +16,7 @@ class ApplicationCubit extends Cubit<ApplicationState> {
     try {
       Application application = await _repository.getApplicationById(id);
 
+      print(application);
       if (application == null) {
         emit(ApplicationEmpty());
       } else {

@@ -1,3 +1,4 @@
+import 'package:covid_vaccination/application/data/cubit/application_cubit.dart';
 import 'package:covid_vaccination/application/presentation/application_page.dart';
 import 'package:covid_vaccination/authentication/data/cubit/admin_auth_cubit.dart';
 import 'package:covid_vaccination/authentication/data/cubit/user_auth_cubit.dart';
@@ -16,6 +17,9 @@ class App extends StatelessWidget {
         ),
         BlocProvider<AdminAuthCubit>(
           create: (context) => AdminAuthCubit(),
+        ),
+        BlocProvider<ApplicationCubit>(
+          create: (context) => ApplicationCubit(),
         ),
       ],
       child: MaterialApp(

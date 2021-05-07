@@ -21,6 +21,9 @@ class ApplicationLoaded extends ApplicationState {
 
   @override
   int get hashCode => application.hashCode;
+
+  @override
+  String toString() => 'ApplicationLoaded(application: $application)';
 }
 
 class ApplicationError extends ApplicationState {

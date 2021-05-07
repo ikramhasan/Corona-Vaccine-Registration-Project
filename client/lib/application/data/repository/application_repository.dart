@@ -14,11 +14,11 @@ class ApplicationRepository {
 
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
-        if (data.isNotEmpty) {
+        if (data['data'] != null) {
           Application application = Application.fromJson(data['data']);
           return application;
         } else {
-          throw CustomException('No application found. Please try again!');
+          return null;
         }
       }
     } catch (e) {
