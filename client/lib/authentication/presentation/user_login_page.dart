@@ -54,7 +54,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
             Row(
               children: [
                 Lottie.asset(
-                  'assets/lottie/corona_doctor.json',
+                  'assets/lottie/getting_vaccinated.json',
                   height: 512,
                   width: 642,
                 ),

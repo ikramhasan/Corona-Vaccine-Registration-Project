@@ -1,3 +1,4 @@
+import 'package:covid_vaccination/app/presentation/components/error_dialogue.dart';
 import 'package:covid_vaccination/authentication/presentation/user_login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
