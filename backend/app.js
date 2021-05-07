@@ -1,37 +1,15 @@
 const express = require("express");
 var cors = require("cors");
-const mysql = require("mysql");
 
 const userRouter = require('./routes/userRoutes');
 const adminRouter = require('./routes/adminRoutes');
 const pool = require('./databaseConnection');
 
 const app = express();
-const port = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
-// Listen on port
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
-});
-
-
-// const pool = mysql.createPool({
-//   connectionLimit: 10,
-//   host: "localhost",
-//   port: 3306,
-//   user: "root",
-//   password: "",
-//   database: "covid vaccination",
-// });
-
-// Connect to server
-app.get("/", (req, res) => {
-  res.send("Server running...");
-});
 
 app.use("/api/v1/admins", adminRouter);
 app.use("/api/v1/users", userRouter);
@@ -128,3 +106,6 @@ app.get("/submitsz", (req, res) => {
     );
   });
 });
+
+
+module.exports = app;
