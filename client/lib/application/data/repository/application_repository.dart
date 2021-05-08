@@ -52,4 +52,25 @@ class ApplicationRepository {
       throw CustomException('Server Error!');
     }
   }
+
+  getAllApplications() async {
+    Uri uri = Uri.parse('$BASE_URL/applications');
+
+    try {
+      var response = await http.get(uri);
+
+      var data = jsonDecode(response.body);
+
+      if (data['status'] == 'fail') {
+        throw CustomException('Error creating application!');
+      } else {
+        final List<Application> applicationList =
+            (data['data'] as List).map((e) => Application.fromJson(e)).toList();
+
+        return applicationList;
+      }
+    } catch (e) {
+      throw CustomException('Server Error!');
+    }
+  }
 }

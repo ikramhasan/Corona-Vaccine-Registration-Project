@@ -1,5 +1,6 @@
 import 'package:covid_vaccination/app/presentation/admin_home_page.dart';
 import 'package:covid_vaccination/app/presentation/components/loading_widget.dart';
+import 'package:covid_vaccination/app/presentation/wrappers/admin_wrapper.dart';
 import 'package:covid_vaccination/authentication/data/cubit/admin_auth_cubit.dart';
 import 'package:covid_vaccination/authentication/data/models/admin.dart';
 import 'package:covid_vaccination/authentication/presentation/components/authentication_button.dart';
@@ -67,7 +68,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                             ? showLoginDialog(context)
                             : Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (context) => AdminHomePage(),
+                                  builder: (context) => AdminWrapper(),
                                 ),
                               );
                       }

@@ -17,13 +17,10 @@ class UserHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
 
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 244, vertical: 60),
-        // padding:
-        //     EdgeInsets.symmetric(horizontal: size.width * 0, vertical: 5.55),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

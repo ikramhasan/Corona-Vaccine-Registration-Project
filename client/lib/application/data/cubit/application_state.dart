@@ -7,6 +7,15 @@ class ApplicationLoading extends ApplicationState {}
 
 class ApplicationEmpty extends ApplicationState {}
 
+class ApplicationListLoaded extends ApplicationState {
+  final List<Application> applicationList;
+
+  ApplicationListLoaded(this.applicationList);
+
+  @override
+  String toString() => 'ApplicationListLoaded(applicationList: $applicationList)';
+}
+
 class ApplicationLoaded extends ApplicationState {
   final Application application;
 

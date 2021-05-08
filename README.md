@@ -47,7 +47,7 @@ This is the final project of our CSE370 course (Database Systems) The idea is, u
 
 ### Towsif Tazwar Zia (19301266)
 
-- [ ] Users can track their vaccine delivery status
+- [x] Users can track their vaccine delivery status
 - [x] Users can select their vaccination centre
 - [ ] ???
 ### Farhan Anzum Oni (19101048)

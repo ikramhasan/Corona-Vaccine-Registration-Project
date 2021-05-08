@@ -39,4 +39,22 @@ class ApplicationCubit extends Cubit<ApplicationState> {
       emit(ApplicationError(e.message));
     }
   }
+
+  Future<void> getAllApplications() async {
+    emit(ApplicationLoading());
+
+    try {
+      List<Application> applicationList =
+          await _repository.getAllApplications();
+
+      print(applicationList);
+      if (applicationList == null) {
+        emit(ApplicationEmpty());
+      } else {
+        emit(ApplicationListLoaded(applicationList));
+      }
+    } on CustomException catch (e) {
+      emit(ApplicationError(e.message));
+    }
+  }
 }
