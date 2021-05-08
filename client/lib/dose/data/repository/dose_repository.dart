@@ -17,7 +17,6 @@ class DoseRepository {
         print(data);
         if (data.isNotEmpty) {
           Dose dose = Dose.fromJson(data);
-          print(dose.data.toString());
           return dose;
         } else {
           throw CustomException('Could not get dose!');

@@ -97,7 +97,15 @@ class DoseForm extends StatelessWidget {
                             height: 1.1,
                           ),
                         ),
-                        SizedBox(height: 32),
+                        index != state.dose.data.length - 1
+                            ? SizedBox(height: 32)
+                            : Container(),
+                        index != state.dose.data.length - 1
+                            ? Divider()
+                            : Container(),
+                        index != state.dose.data.length - 1
+                            ? SizedBox(height: 32)
+                            : Container(),
                       ],
                     );
                   },

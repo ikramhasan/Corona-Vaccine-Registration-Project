@@ -14,6 +14,7 @@ class ApplicationRepository {
 
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
+        print(data);
         if (data['data'] != null) {
           Application application = Application.fromJson(data['data']);
           return application;

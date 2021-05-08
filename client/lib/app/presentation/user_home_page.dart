@@ -7,13 +7,13 @@ import 'package:covid_vaccination/dose/presentation/dose_form.dart';
 import 'package:flutter/material.dart';
 
 class UserHomePage extends StatelessWidget {
-  // final User user;
-  // final Application application;
+  final User user;
+  final Application application;
 
-  // const UserHomePage(
-  //   this.user,
-  //   this.application,
-  // );
+  const UserHomePage(
+    this.user,
+    this.application,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -62,18 +62,20 @@ class UserHomePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               buildFormHeader(),
-              SizedBox(height: 32),
+              SizedBox(height: 16),
+              Divider(),
+              SizedBox(height: 16),
               Text(
                 'Application For',
                 style: TextStyle(color: Colors.grey[600]),
               ),
               SizedBox(height: 5),
               Text(
-                'Ikramul Hasan',
+                user.name,
                 style: defaultTextStyle,
               ),
               Text(
-                'Banasree, Dhaka',
+                user.location,
                 style: TextStyle(color: Colors.grey[600]),
               ),
               SizedBox(height: 32),
@@ -87,7 +89,7 @@ class UserHomePage extends StatelessWidget {
                 style: TextStyle(color: Colors.grey[600]),
               ),
               Text(
-                'XXXXXXXXX',
+                user.nid,
                 style: defaultTextStyle,
               ),
               SizedBox(height: 5),
@@ -96,7 +98,7 @@ class UserHomePage extends StatelessWidget {
                 style: TextStyle(color: Colors.grey[600]),
               ),
               Text(
-                'ikramhasan.dev@gmail.com',
+                user.email,
                 style: defaultTextStyle,
               ),
               SizedBox(height: 5),
@@ -105,7 +107,7 @@ class UserHomePage extends StatelessWidget {
                 style: TextStyle(color: Colors.grey[600]),
               ),
               Text(
-                '01867967951',
+                user.phoneNo.toString(),
                 style: defaultTextStyle,
               ),
               SizedBox(height: 5),
@@ -114,7 +116,7 @@ class UserHomePage extends StatelessWidget {
                 style: TextStyle(color: Colors.grey[600]),
               ),
               Text(
-                '22',
+                user.age.toString(),
                 style: defaultTextStyle,
               ),
               SizedBox(height: 5),
@@ -123,18 +125,22 @@ class UserHomePage extends StatelessWidget {
                 style: TextStyle(color: Colors.grey[600]),
               ),
               Text(
-                'Student',
+                user.occupation,
                 style: defaultTextStyle,
               ),
               SizedBox(height: 16),
               buildIssuedRow(),
-              SizedBox(height: 32),
+              SizedBox(height: 16),
+              Divider(),
+              SizedBox(height: 16),
               Text(
                 'Administrator Comment',
                 style: TextStyle(color: Colors.grey[600]),
               ),
               Text(
-                'comment',
+                application.adminComment.isEmpty
+                    ? 'None'
+                    : application.adminComment,
                 style: defaultTextStyle,
               ),
             ],
@@ -155,7 +161,7 @@ class UserHomePage extends StatelessWidget {
               'Issued On',
               style: TextStyle(color: Colors.grey[600]),
             ),
-            Text('7th May, 2021'),
+            Text(application.submissionDate.toString()),
           ],
         ),
         Column(
@@ -165,7 +171,7 @@ class UserHomePage extends StatelessWidget {
               'Issued for',
               style: TextStyle(color: Colors.grey[600]),
             ),
-            Text('Banasree Vaccination Centre'),
+            Text(application.vaccinationCenter),
           ],
         ),
       ],
@@ -191,7 +197,7 @@ class UserHomePage extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '1',
+                  application.applicationId.toString(),
                   style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,

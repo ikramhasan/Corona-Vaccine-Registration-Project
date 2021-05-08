@@ -95,7 +95,8 @@ class _UserLoginPageState extends State<UserLoginPage> {
                       if (state is UserAuthLoaded) {
                         index == 2
                             ? showLoginDialog(context)
-                            : handleApplicationRouting(state.user.userId, context);
+                            : handleApplicationRouting(
+                                state.user.userId, context);
                       }
                     },
                     builder: (context, state) {

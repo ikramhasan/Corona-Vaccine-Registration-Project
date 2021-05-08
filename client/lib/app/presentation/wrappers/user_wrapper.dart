@@ -15,8 +15,8 @@ class UserWrapper extends StatelessWidget {
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
           builder: (context) => UserHomePage(
-            // userState.user,
-            // applicationState.application,
+            userState.user,
+            applicationState.application,
           ),
         ),
         (route) => false,
