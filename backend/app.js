@@ -4,6 +4,7 @@ var cors = require("cors");
 const userRouter = require("./routes/userRoutes");
 const adminRouter = require("./routes/adminRoutes");
 const applicationRouter = require("./routes/applicationRoutes");
+const doseRouter = require("./routes/doseRoutes");
 const pool = require("./databaseConnection");
 
 const app = express();
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use("/api/v1/admins", adminRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/applications", applicationRouter);
+app.use("/api/v1/doses", doseRouter);
 
 // ----- Merazul Islam Dihan -------
 
