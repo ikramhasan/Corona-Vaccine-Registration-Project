@@ -4,6 +4,7 @@ import 'package:covid_vaccination/application/presentation/application_page.dart
 import 'package:covid_vaccination/authentication/data/cubit/admin_auth_cubit.dart';
 import 'package:covid_vaccination/authentication/data/cubit/user_auth_cubit.dart';
 import 'package:covid_vaccination/authentication/presentation/landing_page.dart';
+import 'package:covid_vaccination/dose/data/cubit/dose_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -22,6 +23,9 @@ class App extends StatelessWidget {
         BlocProvider<ApplicationCubit>(
           create: (context) => ApplicationCubit(),
         ),
+        BlocProvider<DoseCubit>(
+          create: (context) => DoseCubit(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -33,7 +37,7 @@ class App extends StatelessWidget {
           disabledColor: Color(0xFF8F909A),
           fontFamily: GoogleFonts.poppins().fontFamily,
         ),
-        home: LandingPage(),
+        home: UserHomePage(),
       ),
     );
   }

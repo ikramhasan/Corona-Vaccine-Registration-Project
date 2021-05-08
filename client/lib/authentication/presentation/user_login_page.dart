@@ -1,5 +1,6 @@
 import 'package:covid_vaccination/app/presentation/components/loading_widget.dart';
 import 'package:covid_vaccination/app/presentation/user_home_page.dart';
+import 'package:covid_vaccination/application/data/cubit/application_cubit.dart';
 import 'package:covid_vaccination/application/presentation/application_page.dart';
 import 'package:covid_vaccination/authentication/data/cubit/user_auth_cubit.dart';
 import 'package:covid_vaccination/authentication/data/models/user.dart';
@@ -44,6 +45,16 @@ class _UserLoginPageState extends State<UserLoginPage> {
     }
   }
 
+  handleApplicationRouting(int userId, BuildContext context) {
+    context.read<ApplicationCubit>().getApplication(userId);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ApplicationPage(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,12 +95,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
                       if (state is UserAuthLoaded) {
                         index == 2
                             ? showLoginDialog(context)
-                            : Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ApplicationPage(),
-                                ),
-                              );
+                            : handleApplicationRouting(state.user.userId, context);
                       }
                     },
                     builder: (context, state) {

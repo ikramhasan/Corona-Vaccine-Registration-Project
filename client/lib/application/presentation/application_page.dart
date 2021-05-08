@@ -14,7 +14,7 @@ import 'package:lottie/lottie.dart';
 class ApplicationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    context.read<ApplicationCubit>().getApplication(1);
+    
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 244, vertical: 60),
