@@ -1,5 +1,6 @@
-import 'package:covid_vaccination/application/data/repository/application_repository.dart';
-import 'package:covid_vaccination/authentication/data/cubit/admin_auth_cubit.dart';
+import 'package:covid_vaccination/app/presentation/components/loading_widget.dart';
+import 'package:covid_vaccination/application/data/cubit/application_cubit.dart';
+import 'package:covid_vaccination/application/presentation/components/application_grid.dart';
 import 'package:covid_vaccination/authentication/data/models/admin.dart';
 import 'package:covid_vaccination/authentication/presentation/components/header.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,14 @@ class AdminHomePage extends StatelessWidget {
             SizedBox(height: 32),
             buildListHeader(),
             SizedBox(height: 32),
+            BlocBuilder<ApplicationCubit, ApplicationState>(
+              builder: (context, state) {
+                if (state is ApplicationListLoaded) {
+                  return ApplicationGrid(state.applicationList);
+                }
+                return LoadingWidget();
+              },
+            ),
           ],
         ),
       ),

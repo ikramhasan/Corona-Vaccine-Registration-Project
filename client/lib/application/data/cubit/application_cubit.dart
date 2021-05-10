@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:covid_vaccination/application/data/models/application.dart';
+import 'package:covid_vaccination/application/data/models/application_list.dart';
 import 'package:covid_vaccination/application/data/repository/application_repository.dart';
 import 'package:covid_vaccination/core/errors/custom_exception.dart';
 import 'package:meta/meta.dart';
@@ -44,8 +45,7 @@ class ApplicationCubit extends Cubit<ApplicationState> {
     emit(ApplicationLoading());
 
     try {
-      List<Application> applicationList =
-          await _repository.getAllApplications();
+      ApplicationList applicationList = await _repository.getAllApplications();
 
       print(applicationList);
       if (applicationList == null) {

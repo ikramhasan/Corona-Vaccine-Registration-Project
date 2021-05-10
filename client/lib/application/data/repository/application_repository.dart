@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:covid_vaccination/application/data/models/application.dart';
+import 'package:covid_vaccination/application/data/models/application_list.dart';
 import 'package:covid_vaccination/core/constants/constants.dart';
 import 'package:covid_vaccination/core/errors/custom_exception.dart';
 import 'package:http/http.dart' as http;
@@ -61,11 +62,12 @@ class ApplicationRepository {
 
       var data = jsonDecode(response.body);
 
+      print(data);
+
       if (data['status'] == 'fail') {
         throw CustomException('Error creating application!');
       } else {
-        final List<Application> applicationList =
-            (data['data'] as List).map((e) => Application.fromJson(e)).toList();
+        final ApplicationList applicationList = ApplicationList.fromJson(data);
 
         return applicationList;
       }

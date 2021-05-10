@@ -8,7 +8,7 @@ class ApplicationLoading extends ApplicationState {}
 class ApplicationEmpty extends ApplicationState {}
 
 class ApplicationListLoaded extends ApplicationState {
-  final List<Application> applicationList;
+  final ApplicationList applicationList;
 
   ApplicationListLoaded(this.applicationList);
 

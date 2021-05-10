@@ -17,6 +17,7 @@ dependencies:
   google_fonts: ^2.0.0
   http: ^0.13.2
   lottie: ^1.0.1
+  pluto_grid: ^1.2.0
 
 dev_dependencies:
   flutter_test:
