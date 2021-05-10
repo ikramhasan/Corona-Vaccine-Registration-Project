@@ -43,7 +43,7 @@ This is the final project of our CSE370 course (Database Systems) The idea is, u
 
 - [ ] Admin can change the vaccine status - (Pending, Approve, Reject, Delivered) - Multi-selection
 - [x] Admin can also give comments
-- [ ] Create new dose
+- [x] Create new dose
 
 ### Towsif Tazwar Zia (19301266)
 
@@ -52,9 +52,9 @@ This is the final project of our CSE370 course (Database Systems) The idea is, u
 - [ ] ???
 ### Farhan Anzum Oni (19101048)
 
-- [ ] User can apply for vaccine
-- [ ] User can view their vaccine status, authority comments
-- [ ] User can view their next dose of vaccine
+- [x] User can apply for vaccine
+- [x] User can view their vaccine status, authority comments
+- [x] User can view their next dose of vaccine
 
 ## Contributors ✨
 
