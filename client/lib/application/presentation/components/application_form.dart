@@ -64,7 +64,7 @@ class _ApplicationFormState extends State<ApplicationForm> {
             text: 'Select',
             onTap: () {
               if (userState is UserAuthLoaded) {
-                Application application = Application(
+                ApplicationEntity application = ApplicationEntity(
                   userId: userState.user.userId,
                   submissionDate: DateTime.now(),
                   vaccinationCenter: center,

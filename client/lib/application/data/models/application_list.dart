@@ -25,6 +25,36 @@ class ApplicationList {
 }
 
 class Data {
+  Application application;
+  List<DoseList> doseList;
+
+  Data({this.application, this.doseList});
+
+  Data.fromJson(Map<String, dynamic> json) {
+    application = json['application'] != null
+        ? new Application.fromJson(json['application'])
+        : null;
+    if (json['dose_list'] != null) {
+      doseList = new List<DoseList>();
+      json['dose_list'].forEach((v) {
+        doseList.add(new DoseList.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.application != null) {
+      data['application'] = this.application.toJson();
+    }
+    if (this.doseList != null) {
+      data['dose_list'] = this.doseList.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class Application {
   int userId;
   String name;
   String email;
@@ -39,7 +69,7 @@ class Data {
   String adminComment;
   String vaccinationCenter;
 
-  Data(
+  Application(
       {this.userId,
       this.name,
       this.email,
@@ -54,7 +84,7 @@ class Data {
       this.adminComment,
       this.vaccinationCenter});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  Application.fromJson(Map<String, dynamic> json) {
     userId = json['user_id'];
     name = json['name'];
     email = json['email'];
@@ -85,6 +115,34 @@ class Data {
     data['submission_date'] = this.submissionDate;
     data['admin_comment'] = this.adminComment;
     data['vaccination_center'] = this.vaccinationCenter;
+    return data;
+  }
+}
+
+class DoseList {
+  int doseId;
+  int userId;
+  int doseNo;
+  String date;
+  String status;
+
+  DoseList({this.doseId, this.userId, this.doseNo, this.date, this.status});
+
+  DoseList.fromJson(Map<String, dynamic> json) {
+    doseId = json['dose_id'];
+    userId = json['user_id'];
+    doseNo = json['dose_no'];
+    date = json['date'];
+    status = json['status'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['dose_id'] = this.doseId;
+    data['user_id'] = this.userId;
+    data['dose_no'] = this.doseNo;
+    data['date'] = this.date;
+    data['status'] = this.status;
     return data;
   }
 }

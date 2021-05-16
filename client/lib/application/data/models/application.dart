@@ -4,13 +4,13 @@
 
 import 'dart:convert';
 
-Application applicationFromJson(String str) =>
-    Application.fromJson(json.decode(str));
+ApplicationEntity applicationFromJson(String str) =>
+    ApplicationEntity.fromJson(json.decode(str));
 
-String applicationToJson(Application data) => json.encode(data.toJson());
+String applicationToJson(ApplicationEntity data) => json.encode(data.toJson());
 
-class Application {
-  Application({
+class ApplicationEntity {
+  ApplicationEntity({
     this.applicationId,
     this.userId,
     this.submissionDate,
@@ -24,7 +24,8 @@ class Application {
   String adminComment;
   String vaccinationCenter;
 
-  factory Application.fromJson(Map<String, dynamic> json) => Application(
+  factory ApplicationEntity.fromJson(Map<String, dynamic> json) =>
+      ApplicationEntity(
         applicationId: json["application_id"],
         userId: json["user_id"],
         submissionDate: DateTime.parse(json["submission_date"]),

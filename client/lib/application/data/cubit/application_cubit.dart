@@ -15,7 +15,7 @@ class ApplicationCubit extends Cubit<ApplicationState> {
     emit(ApplicationLoading());
 
     try {
-      Application application = await _repository.getApplicationById(id);
+      ApplicationEntity application = await _repository.getApplicationById(id);
 
       print(application);
       if (application == null) {
@@ -28,12 +28,12 @@ class ApplicationCubit extends Cubit<ApplicationState> {
     }
   }
 
-  Future<void> createApplication(Application application) async {
+  Future<void> createApplication(ApplicationEntity application) async {
     emit(ApplicationLoading());
 
     try {
       await _repository.createApplication(application);
-      Application apl =
+      ApplicationEntity apl =
           await _repository.getApplicationById(application.userId);
       emit(ApplicationLoaded(apl));
     } on CustomException catch (e) {

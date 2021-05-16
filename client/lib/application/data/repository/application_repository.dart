@@ -17,7 +17,7 @@ class ApplicationRepository {
         var data = jsonDecode(response.body);
         print(data);
         if (data['data'] != null) {
-          Application application = Application.fromJson(data['data']);
+          ApplicationEntity application = ApplicationEntity.fromJson(data['data']);
           return application;
         } else {
           return null;
@@ -28,7 +28,7 @@ class ApplicationRepository {
     }
   }
 
-  createApplication(Application application) async {
+  createApplication(ApplicationEntity application) async {
     Uri uri = Uri.parse('$BASE_URL/applications');
 
     try {
@@ -65,10 +65,9 @@ class ApplicationRepository {
       print(data);
 
       if (data['status'] == 'fail') {
-        throw CustomException('Error creating application!');
+        throw CustomException('Error getting application!');
       } else {
         final ApplicationList applicationList = ApplicationList.fromJson(data);
-
         return applicationList;
       }
     } catch (e) {

@@ -32,6 +32,7 @@ class _ApplicationGridState extends State<ApplicationGrid> {
   @override
   Widget build(BuildContext context) {
     print(widget.applicationList);
+    final applicationList = widget.applicationList.data;
     return Expanded(
       child: PlutoGrid(
         onChanged: (PlutoGridOnChangedEvent event) {
@@ -115,37 +116,37 @@ class _ApplicationGridState extends State<ApplicationGrid> {
             return PlutoRow(
               cells: {
                 'number_field': PlutoCell(
-                  value: widget.applicationList.data[index].applicationId,
+                  value: applicationList[index].application.applicationId,
                 ),
                 'name_field': PlutoCell(
-                  value: widget.applicationList.data[index].name,
+                  value: applicationList[index].application.name,
                 ),
                 'age_field': PlutoCell(
-                  value: widget.applicationList.data[index].age,
+                  value: applicationList[index].application.age,
                 ),
                 'occupation_field': PlutoCell(
-                  value: widget.applicationList.data[index].occupation,
+                  value: applicationList[index].application.occupation,
                 ),
                 'location_field': PlutoCell(
-                  value: widget.applicationList.data[index].location,
+                  value: applicationList[index].application.location,
                 ),
                 'nid_field': PlutoCell(
-                  value: widget.applicationList.data[index].nid,
+                  value: applicationList[index].application.nid,
                 ),
                 'email_field': PlutoCell(
-                  value: widget.applicationList.data[index].email,
+                  value: applicationList[index].application.email,
                 ),
                 'phone_field': PlutoCell(
-                  value: widget.applicationList.data[index].phoneNo,
+                  value: applicationList[index].application.phoneNo,
                 ),
                 'date_field': PlutoCell(
-                  value: widget.applicationList.data[index].submissionDate,
+                  value: applicationList[index].application.submissionDate,
                 ),
                 'text_field': PlutoCell(
-                  value: widget.applicationList.data[index].vaccinationCenter,
+                  value: applicationList[index].application.vaccinationCenter,
                 ),
                 'admin_comment': PlutoCell(
-                  value: widget.applicationList.data[index].adminComment,
+                  value: applicationList[index].application.adminComment,
                 ),
               },
             );

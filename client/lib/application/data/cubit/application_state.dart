@@ -17,7 +17,7 @@ class ApplicationListLoaded extends ApplicationState {
 }
 
 class ApplicationLoaded extends ApplicationState {
-  final Application application;
+  final ApplicationEntity application;
 
   ApplicationLoaded(this.application);
 

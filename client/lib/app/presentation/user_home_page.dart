@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 
 class UserHomePage extends StatelessWidget {
   final User user;
-  final Application application;
+  final ApplicationEntity application;
 
   const UserHomePage(
     this.user,
