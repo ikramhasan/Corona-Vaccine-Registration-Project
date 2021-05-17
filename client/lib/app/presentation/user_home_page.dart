@@ -30,7 +30,7 @@ class UserHomePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 buildApplicationForm(),
-                DoseForm(),
+                DoseForm(user.userId),
               ],
             ),
             const Spacer(),

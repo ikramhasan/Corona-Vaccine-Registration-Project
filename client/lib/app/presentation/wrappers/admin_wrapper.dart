@@ -21,7 +21,7 @@ class AdminWrapper extends StatelessWidget {
             BlocBuilder<AdminAuthCubit, AdminAuthState>(
               builder: (context, state) {
                 if (state is AdminAuthLoaded) {
-                  
+                  context.read<ApplicationCubit>().getAllApplications();
                   SchedulerBinding.instance.addPostFrameCallback((_) {
                     Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(

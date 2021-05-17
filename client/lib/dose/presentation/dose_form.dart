@@ -5,9 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DoseForm extends StatelessWidget {
+  final int userId;
+
+  const DoseForm(this.userId);
+
   @override
   Widget build(BuildContext context) {
-    context.read<DoseCubit>().getDoseForUser(1);
+    context.read<DoseCubit>().getDoseForUser(userId);
     return Card(
       child: Container(
         // height: 740 / 2,
@@ -26,90 +30,113 @@ class DoseForm extends StatelessWidget {
             },
             builder: (context, state) {
               if (state is DoseLoaded) {
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: state.dose.data.length,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              '#',
-                              style: TextStyle(
-                                fontSize: 32,
-                                fontWeight: FontWeight.bold,
-                                height: 1.1,
-                                color: Colors.grey[600],
-                              ),
+                return state.dose.data.isEmpty
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Status',
+                            style: TextStyle(
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold,
+                              height: 1.1,
+                              color: Colors.grey[600],
                             ),
-                            Text(
-                              state.dose.data[index].doseId.toString(),
-                              style: TextStyle(
-                                fontSize: 32,
-                                fontWeight: FontWeight.bold,
-                                height: 1.1,
-                              ),
+                          ),
+                          Text(
+                            'Pending',
+                            style: TextStyle(
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold,
+                              height: 1.1,
                             ),
-                          ],
-                        ),
-                        Text(
-                          'DOSE NO',
-                          style: TextStyle(
-                            color: Colors.grey[600],
-                            letterSpacing: 0.5,
                           ),
-                        ),
-                        SizedBox(height: 32),
-                        Text(
-                          'Status:',
-                          style: TextStyle(
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold,
-                            height: 1.1,
-                            color: Colors.grey[600],
-                          ),
-                        ),
-                        Text(
-                          state.dose.data[index].status,
-                          style: TextStyle(
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold,
-                            height: 1.1,
-                          ),
-                        ),
-                        SizedBox(height: 32),
-                        Text(
-                          'Date:',
-                          style: TextStyle(
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold,
-                            height: 1.1,
-                            color: Colors.grey[600],
-                          ),
-                        ),
-                        Text(
-                          state.dose.data[index].date,
-                          style: TextStyle(
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold,
-                            height: 1.1,
-                          ),
-                        ),
-                        index != state.dose.data.length - 1
-                            ? SizedBox(height: 32)
-                            : Container(),
-                        index != state.dose.data.length - 1
-                            ? Divider()
-                            : Container(),
-                        index != state.dose.data.length - 1
-                            ? SizedBox(height: 32)
-                            : Container(),
-                      ],
-                    );
-                  },
-                );
+                        ],
+                      )
+                    : ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: state.dose.data.length,
+                        itemBuilder: (context, index) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    '#',
+                                    style: TextStyle(
+                                      fontSize: 32,
+                                      fontWeight: FontWeight.bold,
+                                      height: 1.1,
+                                      color: Colors.grey[600],
+                                    ),
+                                  ),
+                                  Text(
+                                    state.dose.data[index].doseId.toString(),
+                                    style: TextStyle(
+                                      fontSize: 32,
+                                      fontWeight: FontWeight.bold,
+                                      height: 1.1,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Text(
+                                'DOSE NO',
+                                style: TextStyle(
+                                  color: Colors.grey[600],
+                                  letterSpacing: 0.5,
+                                ),
+                              ),
+                              SizedBox(height: 32),
+                              Text(
+                                'Status:',
+                                style: TextStyle(
+                                  fontSize: 32,
+                                  fontWeight: FontWeight.bold,
+                                  height: 1.1,
+                                  color: Colors.grey[600],
+                                ),
+                              ),
+                              Text(
+                                state.dose.data[index].status,
+                                style: TextStyle(
+                                  fontSize: 32,
+                                  fontWeight: FontWeight.bold,
+                                  height: 1.1,
+                                ),
+                              ),
+                              SizedBox(height: 32),
+                              Text(
+                                'Date:',
+                                style: TextStyle(
+                                  fontSize: 32,
+                                  fontWeight: FontWeight.bold,
+                                  height: 1.1,
+                                  color: Colors.grey[600],
+                                ),
+                              ),
+                              Text(
+                                state.dose.data[index].date,
+                                style: TextStyle(
+                                  fontSize: 32,
+                                  fontWeight: FontWeight.bold,
+                                  height: 1.1,
+                                ),
+                              ),
+                              index != state.dose.data.length - 1
+                                  ? SizedBox(height: 32)
+                                  : Container(),
+                              index != state.dose.data.length - 1
+                                  ? Divider()
+                                  : Container(),
+                              index != state.dose.data.length - 1
+                                  ? SizedBox(height: 32)
+                                  : Container(),
+                            ],
+                          );
+                        },
+                      );
               }
               return LoadingWidget();
             },

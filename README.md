@@ -30,18 +30,18 @@ This is the final project of our CSE370 course (Database Systems) The idea is, u
 - [x] User registration
 - [x] Admin login
 - [x] Admin registration
-- [ ] Update user info
-- [ ] Update admin info?
+- [x] Get user information (get user by email and pass)
+- [x] Get admin information (get admin by email and pass)
 
 ### Merazul Islam Dihan (19101118)
 
-- [ ] Admin can search for applications based on location, age group, user name
-- [ ] Admin can view statistics - ie. how many applications were submitted day wise
-- [ ] Admin can view all vaccine applications
+- [x] Admin can search for applications based on location, age group, user name
+- [x] Admin can sort applications
+- [x] Admin can view all vaccine applications
 
 ### Sadia Mahmud (19101320)
 
-- [ ] Admin can change the vaccine status - (Pending, Approve, Reject, Delivered) - Multi-selection
+- [x] Admin can change the vaccine status - (Pending, Approve, Reject, Delivered) - Multi-selection
 - [x] Admin can also give comments
 - [x] Create new dose
 
@@ -49,7 +49,7 @@ This is the final project of our CSE370 course (Database Systems) The idea is, u
 
 - [x] Users can track their vaccine delivery status
 - [x] Users can select their vaccination centre
-- [ ] ???
+- [x] Get dose information (get dose by user id)
 ### Farhan Anzum Oni (19101048)
 
 - [x] User can apply for vaccine

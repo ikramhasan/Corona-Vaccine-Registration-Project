@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:covid_vaccination/core/constants/constants.dart';
 import 'package:covid_vaccination/core/errors/custom_exception.dart';
 import 'package:covid_vaccination/dose/data/models/dose.dart';
+import 'package:covid_vaccination/dose/data/models/dose_entity.dart';
 import 'package:http/http.dart' as http;
 
 class DoseRepository {
@@ -26,7 +27,7 @@ class DoseRepository {
     }
   }
 
-  createDose(Dose dose) async {
+  createDose(DoseEntity dose) async {
     Uri uri = Uri.parse('$BASE_URL/doses');
 
     try {

@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:covid_vaccination/core/errors/custom_exception.dart';
 import 'package:covid_vaccination/dose/data/models/dose.dart';
+import 'package:covid_vaccination/dose/data/models/dose_entity.dart';
 import 'package:covid_vaccination/dose/data/repository/dose_repository.dart';
 import 'package:meta/meta.dart';
 
@@ -22,13 +23,12 @@ class DoseCubit extends Cubit<DoseState> {
     }
   }
 
-  Future<void> createDose(Dose dose) async {
+  Future<void> createDose(DoseEntity dose) async {
     emit(DoseLoading());
 
     try {
       await _repository.createDose(dose);
-      Dose doseFromDB =
-          await _repository.getDoseForUser(dose.data.first.userId);
+      Dose doseFromDB = await _repository.getDoseForUser(dose.userId);
       emit(DoseLoaded(doseFromDB));
     } on CustomException catch (e) {
       emit(DoseError(e.message));

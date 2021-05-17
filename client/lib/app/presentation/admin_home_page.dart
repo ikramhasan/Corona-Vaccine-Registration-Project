@@ -4,6 +4,7 @@ import 'package:covid_vaccination/application/data/models/application_list.dart'
 import 'package:covid_vaccination/authentication/data/models/admin.dart';
 import 'package:covid_vaccination/authentication/presentation/components/header.dart';
 import 'package:covid_vaccination/dose/data/cubit/dose_cubit.dart';
+import 'package:covid_vaccination/dose/data/models/dose_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pluto_grid/pluto_grid.dart';
@@ -42,7 +43,6 @@ class _AdminHomePageState extends State<AdminHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    context.read<ApplicationCubit>().getAllApplications();
     return Scaffold(
       key: _globalKey,
       endDrawer: Drawer(
@@ -59,13 +59,15 @@ class _AdminHomePageState extends State<AdminHomePage> {
               listener: (context, state) {
                 if (state is DoseLoaded) {
                   setState(() {
-                    adminStatus = state.dose.status;
+                    state.dose.data.isEmpty
+                        ? adminStatus = 'Pending'
+                        : adminStatus = state.dose.data.first.status;
                   });
                 }
               },
               builder: (context, state) {
                 if (state is DoseLoaded) {
-                  adminStatus = state.dose.status;
+                  bool isEmpty = state.dose.data.isEmpty;
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
@@ -79,25 +81,21 @@ class _AdminHomePageState extends State<AdminHomePage> {
                           ),
                         ),
                         SizedBox(height: 16),
+                        isEmpty
+                            ? Container()
+                            : Text(
+                                'Date',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                        isEmpty ? Container() : SizedBox(height: 8),
+                        isEmpty
+                            ? Container()
+                            : Text(state.dose.data.first.date.substring(0, 10)),
+                        isEmpty ? Container() : SizedBox(height: 8),
                         Text(
                           'Status',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(height: 8),
-                        Text(state.dose.data.first.status),
-                        SizedBox(height: 8),
-                        Text(
-                          'Date',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(height: 8),
-                        Text(state.dose.data.first.date.substring(0, 10)),
-                        SizedBox(height: 8),
-                        Text(
-                          'Comment',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(height: 8),
                         DropdownButton<String>(
                           hint: Text(adminStatus),
                           isExpanded: true,
@@ -119,6 +117,11 @@ class _AdminHomePageState extends State<AdminHomePage> {
                           },
                         ),
                         SizedBox(height: 8),
+                        Text(
+                          'Comment',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 8),
                         TextFormField(
                           initialValue: application.application.adminComment,
                           maxLines: 3,
@@ -128,19 +131,34 @@ class _AdminHomePageState extends State<AdminHomePage> {
                           ),
                         ),
                         SizedBox(height: 16),
-                        Container(
-                          height: 60,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).accentColor,
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Update',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
+                        InkWell(
+                          onTap: () async {
+                            DoseEntity dose = DoseEntity(
+                              userId: int.parse(value),
+                              date: DateTime.now(),
+                              status: adminStatus,
+                              doseNo: 1,
+                            );
+
+                            await context.read<DoseCubit>().createDose(dose);
+                            context
+                                .read<ApplicationCubit>()
+                                .getAllApplications();
+                          },
+                          child: Container(
+                            height: 60,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).accentColor,
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Update',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),
@@ -164,184 +182,191 @@ class _AdminHomePageState extends State<AdminHomePage> {
             SizedBox(height: 32),
             buildListHeader(context),
             SizedBox(height: 32),
-            BlocBuilder<ApplicationCubit, ApplicationState>(
-              builder: (context, state) {
-                if (state is ApplicationListLoaded) {
-                  applicationList = state.applicationList.data;
-                  return Container(
-                    height: 500,
-                    child: PlutoGrid(
-                      onSelected: (event) {},
-                      onLoaded: (PlutoGridOnLoadedEvent event) {
-                        event.stateManager
-                            .setSelectingMode(PlutoGridSelectingMode.row);
+            Expanded(
+              child: BlocBuilder<ApplicationCubit, ApplicationState>(
+                builder: (context, state) {
+                  if (state is ApplicationListLoaded) {
+                    applicationList = state.applicationList.data;
+                    return Container(
+                      child: PlutoGrid(
+                        onSelected: (event) {},
+                        onLoaded: (PlutoGridOnLoadedEvent event) {
+                          event.stateManager
+                              .setSelectingMode(PlutoGridSelectingMode.row);
 
-                        stateManager = event.stateManager;
-                      },
-                      onChanged: (PlutoGridOnChangedEvent event) {},
-                      columns: [
-                        PlutoColumn(
-                          width: 80,
-                          title: 'ID',
-                          field: 'number_field',
-                          enableEditingMode: false,
-                          type: PlutoColumnType.number(readOnly: true),
-                        ),
-                        PlutoColumn(
-                          title: 'Name',
-                          field: 'name_field',
-                          enableEditingMode: false,
-                          type: PlutoColumnType.text(readOnly: true),
-                        ),
-                        PlutoColumn(
-                          width: 80,
-                          title: 'Age',
-                          field: 'age_field',
-                          enableEditingMode: false,
-                          type: PlutoColumnType.number(readOnly: true),
-                        ),
-                        PlutoColumn(
-                          title: 'Occupation',
-                          field: 'occupation_field',
-                          enableEditingMode: false,
-                          type: PlutoColumnType.text(readOnly: true),
-                        ),
-                        PlutoColumn(
-                          title: 'Location',
-                          field: 'location_field',
-                          enableEditingMode: false,
-                          type: PlutoColumnType.text(readOnly: true),
-                        ),
-                        PlutoColumn(
-                          title: 'NID',
-                          field: 'nid_field',
-                          enableEditingMode: false,
-                          type: PlutoColumnType.number(readOnly: true),
-                        ),
-                        PlutoColumn(
-                          title: 'Email',
-                          field: 'email_field',
-                          enableEditingMode: false,
-                          type: PlutoColumnType.text(readOnly: true),
-                        ),
-                        PlutoColumn(
-                          title: 'Phone No',
-                          field: 'phone_field',
-                          enableEditingMode: false,
-                          type: PlutoColumnType.text(readOnly: true),
-                        ),
-                        PlutoColumn(
-                          title: 'Date',
-                          field: 'date_field',
-                          type: PlutoColumnType.date(),
-                        ),
-                        PlutoColumn(
-                          title: 'Vaccination Center',
-                          field: 'text_field',
-                          type: PlutoColumnType.text(),
-                        ),
-                        PlutoColumn(
-                          title: 'Comment',
-                          field: 'admin_comment',
-                          type: PlutoColumnType.text(),
-                        ),
-                        PlutoColumn(
-                          title: 'Dose 1 Status',
-                          field: 'dose_stat_1',
-                          type: PlutoColumnType.text(),
-                          frozen: PlutoColumnFrozen.right,
-                        ),
-                        PlutoColumn(
-                          title: 'Dose 2 Status',
-                          field: 'dose_stat_2',
-                          type: PlutoColumnType.text(),
-                          frozen: PlutoColumnFrozen.right,
-                        ),
-                        PlutoColumn(
-                          title: 'User id',
-                          field: 'user_id',
-                          type: PlutoColumnType.number(),
-                        ),
-                      ],
-                      rows: List.generate(
-                        applicationList.length,
-                        (index) {
-                          return PlutoRow(
-                            cells: {
-                              'number_field': PlutoCell(
-                                value: applicationList[index]
-                                    .application
-                                    .applicationId,
-                              ),
-                              'name_field': PlutoCell(
-                                value: applicationList[index].application.name,
-                              ),
-                              'age_field': PlutoCell(
-                                value: applicationList[index].application.age,
-                              ),
-                              'occupation_field': PlutoCell(
-                                value: applicationList[index]
-                                    .application
-                                    .occupation,
-                              ),
-                              'location_field': PlutoCell(
-                                value:
-                                    applicationList[index].application.location,
-                              ),
-                              'nid_field': PlutoCell(
-                                value: applicationList[index].application.nid,
-                              ),
-                              'email_field': PlutoCell(
-                                value: applicationList[index].application.email,
-                              ),
-                              'phone_field': PlutoCell(
-                                value:
-                                    applicationList[index].application.phoneNo,
-                              ),
-                              'date_field': PlutoCell(
-                                value: applicationList[index]
-                                    .application
-                                    .submissionDate,
-                              ),
-                              'text_field': PlutoCell(
-                                value: applicationList[index]
-                                    .application
-                                    .vaccinationCenter,
-                              ),
-                              'admin_comment': PlutoCell(
-                                value: applicationList[index]
-                                    .application
-                                    .adminComment,
-                              ),
-                              'dose_stat_1': PlutoCell(
-                                value: applicationList[index].doseList.isEmpty
-                                    ? 'Pending'
-                                    : applicationList[index]
-                                        .doseList
-                                        .first
-                                        .status,
-                              ),
-                              'dose_stat_2': PlutoCell(
-                                value: applicationList[index].doseList.isEmpty
-                                    ? 'Pending'
-                                    : applicationList[index]
-                                        .doseList
-                                        .last
-                                        .status,
-                              ),
-                              'user_id': PlutoCell(
-                                value:
-                                    applicationList[index].application.userId,
-                              ),
-                            },
-                          );
+                          stateManager = event.stateManager;
                         },
+                        onChanged: (PlutoGridOnChangedEvent event) {},
+                        columns: [
+                          PlutoColumn(
+                            width: 80,
+                            title: 'ID',
+                            field: 'number_field',
+                            enableEditingMode: false,
+                            type: PlutoColumnType.number(readOnly: true),
+                          ),
+                          PlutoColumn(
+                            title: 'Name',
+                            field: 'name_field',
+                            enableEditingMode: false,
+                            type: PlutoColumnType.text(readOnly: true),
+                          ),
+                          PlutoColumn(
+                            width: 80,
+                            title: 'Age',
+                            field: 'age_field',
+                            enableEditingMode: false,
+                            type: PlutoColumnType.number(readOnly: true),
+                          ),
+                          PlutoColumn(
+                            title: 'Occupation',
+                            field: 'occupation_field',
+                            enableEditingMode: false,
+                            type: PlutoColumnType.text(readOnly: true),
+                          ),
+                          PlutoColumn(
+                            title: 'Location',
+                            field: 'location_field',
+                            enableEditingMode: false,
+                            type: PlutoColumnType.text(readOnly: true),
+                          ),
+                          PlutoColumn(
+                            title: 'NID',
+                            field: 'nid_field',
+                            enableEditingMode: false,
+                            type: PlutoColumnType.number(readOnly: true),
+                          ),
+                          PlutoColumn(
+                            title: 'Email',
+                            field: 'email_field',
+                            enableEditingMode: false,
+                            type: PlutoColumnType.text(readOnly: true),
+                          ),
+                          PlutoColumn(
+                            title: 'Phone No',
+                            field: 'phone_field',
+                            enableEditingMode: false,
+                            type: PlutoColumnType.text(readOnly: true),
+                          ),
+                          PlutoColumn(
+                            title: 'Date',
+                            field: 'date_field',
+                            type: PlutoColumnType.date(),
+                          ),
+                          PlutoColumn(
+                            title: 'Vaccination Center',
+                            field: 'text_field',
+                            type: PlutoColumnType.text(),
+                          ),
+                          PlutoColumn(
+                            title: 'Comment',
+                            field: 'admin_comment',
+                            type: PlutoColumnType.text(),
+                          ),
+                          PlutoColumn(
+                            title: 'Dose 1 Status',
+                            field: 'dose_stat_1',
+                            type: PlutoColumnType.text(),
+                            frozen: PlutoColumnFrozen.right,
+                          ),
+                          PlutoColumn(
+                            title: 'Dose 2 Status',
+                            field: 'dose_stat_2',
+                            type: PlutoColumnType.text(),
+                            frozen: PlutoColumnFrozen.right,
+                          ),
+                          PlutoColumn(
+                            title: 'User id',
+                            field: 'user_id',
+                            type: PlutoColumnType.number(),
+                          ),
+                        ],
+                        rows: List.generate(
+                          applicationList.length,
+                          (index) {
+                            return PlutoRow(
+                              cells: {
+                                'number_field': PlutoCell(
+                                  value: applicationList[index]
+                                      .application
+                                      .applicationId,
+                                ),
+                                'name_field': PlutoCell(
+                                  value:
+                                      applicationList[index].application.name,
+                                ),
+                                'age_field': PlutoCell(
+                                  value: applicationList[index].application.age,
+                                ),
+                                'occupation_field': PlutoCell(
+                                  value: applicationList[index]
+                                      .application
+                                      .occupation,
+                                ),
+                                'location_field': PlutoCell(
+                                  value: applicationList[index]
+                                      .application
+                                      .location,
+                                ),
+                                'nid_field': PlutoCell(
+                                  value: applicationList[index].application.nid,
+                                ),
+                                'email_field': PlutoCell(
+                                  value:
+                                      applicationList[index].application.email,
+                                ),
+                                'phone_field': PlutoCell(
+                                  value: applicationList[index]
+                                      .application
+                                      .phoneNo,
+                                ),
+                                'date_field': PlutoCell(
+                                  value: applicationList[index]
+                                      .application
+                                      .submissionDate,
+                                ),
+                                'text_field': PlutoCell(
+                                  value: applicationList[index]
+                                      .application
+                                      .vaccinationCenter,
+                                ),
+                                'admin_comment': PlutoCell(
+                                  value: applicationList[index]
+                                      .application
+                                      .adminComment,
+                                ),
+                                'dose_stat_1': PlutoCell(
+                                  value:
+                                      applicationList[index].doseList.length < 1
+                                          ? 'Pending'
+                                          : applicationList[index]
+                                              .doseList
+                                              .first
+                                              .status,
+                                ),
+                                'dose_stat_2': PlutoCell(
+                                  value:
+                                      applicationList[index].doseList.length < 2
+                                          ? 'Pending'
+                                          : applicationList[index]
+                                              .doseList
+                                              .last
+                                              .status,
+                                ),
+                                'user_id': PlutoCell(
+                                  value:
+                                      applicationList[index].application.userId,
+                                ),
+                              },
+                            );
+                          },
+                        ),
                       ),
-                    ),
-                  );
-                }
-                return LoadingWidget();
-              },
+                    );
+                  }
+                  return LoadingWidget();
+                },
+              ),
             ),
           ],
         ),
