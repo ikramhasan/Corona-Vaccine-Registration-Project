@@ -83,3 +83,32 @@ exports.setStatus = (req, res) => {
     );
   });
 };
+
+exports.updateDoseById = (req, res) => {
+  pool.getConnection((error, connection) => {
+    if (error) throw error;
+    console.log(`Connect to database as ${connection.threadId}`);
+
+    const id = req.params.id;
+
+    const { dose_no, date, status } = req.body;
+
+    connection.query(
+      "UPDATE dose SET user_id = ?, dose_no = ?, date = ?, status = ? WHERE user_id = ?",
+      [id, dose_no, date, status, id],
+
+      (error, rows) => {
+        connection.release();
+
+        if (!error) {
+          res.status(200).send({
+            status: 200,
+            message: "User has been updated succesfully",
+          });
+        } else {
+          console.log(error);
+        }
+      }
+    );
+  });
+};

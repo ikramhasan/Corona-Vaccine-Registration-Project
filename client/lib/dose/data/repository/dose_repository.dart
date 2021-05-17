@@ -14,13 +14,36 @@ class DoseRepository {
 
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
-        print(data);
         if (data.isNotEmpty) {
           Dose dose = Dose.fromJson(data);
           return dose;
         } else {
           throw CustomException('Could not get dose!');
         }
+      }
+    } catch (e) {
+      throw CustomException('Server Error!');
+    }
+  }
+
+  createDose(Dose dose) async {
+    Uri uri = Uri.parse('$BASE_URL/doses');
+
+    try {
+      var response = await http.post(
+        uri,
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+        body: jsonEncode(dose.toJson()),
+      );
+
+      var data = jsonDecode(response.body);
+
+      if (data['status'] == 'fail') {
+        throw CustomException('Error creating application!');
+      } else {
+        throw CustomException('Recheck all the fields');
       }
     } catch (e) {
       throw CustomException('Server Error!');

@@ -26,8 +26,6 @@ class _ApplicationGridState extends State<ApplicationGrid> {
     if (value.isEmpty) {
       value = 'No rows are selected.';
     }
-
-    print(value);
   }
 
   @override
@@ -39,7 +37,6 @@ class _ApplicationGridState extends State<ApplicationGrid> {
           height: 500,
           child: PlutoGrid(
             onSelected: (event) {
-              print(event.row.toString());
             },
             onLoaded: (PlutoGridOnLoadedEvent event) {
               event.stateManager.setSelectingMode(PlutoGridSelectingMode.row);
@@ -47,7 +44,6 @@ class _ApplicationGridState extends State<ApplicationGrid> {
               stateManager = event.stateManager;
             },
             onChanged: (PlutoGridOnChangedEvent event) {
-              print(event);
             },
             // onLoaded: (PlutoGridOnLoadedEvent event) {
             //   event.stateManager.setSelectingMode(PlutoGridSelectingMode.row);

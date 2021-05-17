@@ -15,9 +15,9 @@ class ApplicationRepository {
 
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
-        print(data);
         if (data['data'] != null) {
-          ApplicationEntity application = ApplicationEntity.fromJson(data['data']);
+          ApplicationEntity application =
+              ApplicationEntity.fromJson(data['data']);
           return application;
         } else {
           return null;
@@ -42,13 +42,9 @@ class ApplicationRepository {
 
       var data = jsonDecode(response.body);
 
-      print(data);
-
       if (data['status'] == 'fail') {
         throw CustomException('Error creating application!');
-      } else {
-        print('Application created successfully');
-      }
+      } else {}
     } catch (e) {
       throw CustomException('Server Error!');
     }
@@ -62,8 +58,6 @@ class ApplicationRepository {
 
       var data = jsonDecode(response.body);
 
-      print(data);
-
       if (data['status'] == 'fail') {
         throw CustomException('Error getting application!');
       } else {
@@ -73,5 +67,9 @@ class ApplicationRepository {
     } catch (e) {
       throw CustomException('Server Error!');
     }
+  }
+
+  setComment(int userId, String comment) async {
+    // TODO:
   }
 }

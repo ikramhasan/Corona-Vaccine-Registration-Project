@@ -17,7 +17,6 @@ class ApplicationCubit extends Cubit<ApplicationState> {
     try {
       ApplicationEntity application = await _repository.getApplicationById(id);
 
-      print(application);
       if (application == null) {
         emit(ApplicationEmpty());
       } else {
@@ -42,12 +41,11 @@ class ApplicationCubit extends Cubit<ApplicationState> {
   }
 
   Future<void> getAllApplications() async {
-    emit(ApplicationLoading());
+    emit(ApplicationListLoading());
 
     try {
       ApplicationList applicationList = await _repository.getAllApplications();
 
-      print(applicationList);
       if (applicationList == null) {
         emit(ApplicationEmpty());
       } else {

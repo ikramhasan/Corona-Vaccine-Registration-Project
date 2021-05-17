@@ -13,19 +13,10 @@ const mysql = require("mysql");
 const pool = mysql.createPool({
   connectionLimit: 10,
   host: "sql6.freemysqlhosting.net",
-  user: "sql6411586",
-  password: "NkXhrEVirY",
-  database: "sql6411586",
+  user: "sql6413031",
+  password: "EDjfV3Rl9g",
+  database: "sql6413031",
   multipleStatements: true,
 });
-
-// const pool = mysql.createPool({
-//   connectionLimit: 10,
-//   host: "https://www.dbfree.net/",
-//   user: "ikramhasan",
-//   password: "MYSQLPass",
-//   database: "covidvaccination",
-//   multipleStatements: true,
-// });
 
 module.exports = pool;

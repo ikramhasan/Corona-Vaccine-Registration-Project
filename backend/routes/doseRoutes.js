@@ -11,6 +11,7 @@ router
 router
   .route("/:id")
   .get(doseController.getDoseByUserId)
+  .put(doseController.updateDoseById)
   .patch(doseController.setStatus);
 
 module.exports = router;

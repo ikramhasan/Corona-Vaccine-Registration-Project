@@ -7,7 +7,6 @@ import 'package:http/http.dart' as http;
 
 class UserAuthRepository {
   registerUser(User user) async {
-    print(user.toJson());
     Uri uri = Uri.parse('$BASE_URL/users');
 
     try {
@@ -21,7 +20,6 @@ class UserAuthRepository {
 
       var data = jsonDecode(response.body);
       if (data['message'] == 'User has been added succesfully') {
-        print('User created successfully');
       } else {
         throw CustomException('Error creating user!');
       }

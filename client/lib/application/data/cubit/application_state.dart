@@ -5,6 +5,8 @@ abstract class ApplicationState {}
 
 class ApplicationLoading extends ApplicationState {}
 
+class ApplicationListLoading extends ApplicationState {}
+
 class ApplicationEmpty extends ApplicationState {}
 
 class ApplicationListLoaded extends ApplicationState {

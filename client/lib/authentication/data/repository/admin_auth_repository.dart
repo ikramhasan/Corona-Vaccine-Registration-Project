@@ -19,7 +19,6 @@ class AdminAuthRepository {
 
       var data = jsonDecode(response.body);
       if (data['message'] == 'admin has been added succesfully') {
-        print('Admin created successfully');
       } else {
         throw CustomException('Error creating admin!');
       }
@@ -37,9 +36,7 @@ class AdminAuthRepository {
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
         if (data.isNotEmpty) {
-          print(data[0]);
           Admin admin = Admin.fromJson(data[0]);
-          print(admin);
           return admin;
         } else {
           throw CustomException('No admin found. Double check your spelling!');

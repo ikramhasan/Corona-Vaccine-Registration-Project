@@ -21,4 +21,17 @@ class DoseCubit extends Cubit<DoseState> {
       emit(DoseError(e.message));
     }
   }
+
+  Future<void> createDose(Dose dose) async {
+    emit(DoseLoading());
+
+    try {
+      await _repository.createDose(dose);
+      Dose doseFromDB =
+          await _repository.getDoseForUser(dose.data.first.userId);
+      emit(DoseLoaded(doseFromDB));
+    } on CustomException catch (e) {
+      emit(DoseError(e.message));
+    }
+  }
 }
