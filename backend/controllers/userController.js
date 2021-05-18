@@ -18,7 +18,10 @@ exports.getUserByEmailAndPass = (req, res) => {
         if (!error) {
           res.status(200).send(row);
         } else {
-          console.log(error);
+          res.status(400).send({
+            status: 'fail',
+            message: 'User does not exist!'
+          });
         }
       }
     );

@@ -16,10 +16,12 @@
 
 This is the final project of our CSE370 course (Database Systems) The idea is, users can apply for the vaccination, and admins can approve, reject, or confirm their applications. The general purpose of this project is to make the vaccination process easier for everyone, have a database of vaccinated and non-vaccinated people, and last but not the least, keep track of vaccine doses. The frontend is built using flutter, the backend using nodejs and express, and the database using mysql and apache. The website for the project can be found [here](https://covidvaccineregistration.web.app/)
 
-## ER Diagram (needs change) 🔗
+## ER Diagram 🔗
+
 <img src="documentation/images/er.png" alt="drawing"/>
 
-## Schema (needs change) 📑 
+## Schema 📑
+
 <img src="documentation/images/schema.png" alt="drawing"/>
 
 ## Contributions 🐱‍🏍
@@ -50,6 +52,7 @@ This is the final project of our CSE370 course (Database Systems) The idea is, u
 - [x] Users can track their vaccine delivery status
 - [x] Users can select their vaccination centre
 - [x] Get dose information (get dose by user id)
+
 ### Farhan Anzum Oni (19101048)
 
 - [x] User can apply for vaccine
@@ -66,8 +69,21 @@ Thanks goes to these wonderful people
     <br />
     <sub><b>Ikramul Hasan</b></sub></a>
     </td>
+    <td align="center"><img src="https://avatars.githubusercontent.com/u/81776953?v=4" width="100px;" alt=""/>
+    <br />
+    <sub><b>Sadia Mahmud</b></sub></a>
+    </td>
+    <td align="center"><img src="https://avatars.githubusercontent.com/u/49611949?v=4" width="100px;" alt=""/>
+    <br />
+    <sub><b>Merazul Islam Dihan</b></sub></a>
+    </td>
+    <td align="center"><img src="https://avatars.githubusercontent.com/u/73407578?v=4" width="100px;" alt=""/>
+    <br />
+    <sub><b>Farhan Oni</b></sub></a>
+    </td>
   </tr>
 </table>
 
 ## Licenses
-[MIT](LICENSE) 
+
+[MIT](LICENSE)
