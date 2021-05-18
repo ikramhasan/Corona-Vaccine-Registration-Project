@@ -51,7 +51,7 @@ This is the final project of our CSE370 course (Database Systems) The idea is, u
 
 - [x] Users can track their vaccine delivery status
 - [x] Users can select their vaccination centre
-- [x] Get dose information (get dose by user id)
+- [x] Get application information (get application by user id)
 
 ### Farhan Anzum Oni (19101048)
 
